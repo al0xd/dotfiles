@@ -1,0 +1,21 @@
+{
+  "extends": ["eslint:recommended"],
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+
+  "env": {
+    "browser": true
+  },
+
+  "rules": {
+    "indent": ["error", 2],
+    "quotes": ["error", "double"],
+    "require-jsdoc": "off"
+  }
+}
+

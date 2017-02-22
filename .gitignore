@@ -1,0 +1,4 @@
+Gemfile.lock
+/apps/postgres
+*.Ds_Store
+aliases/*.zsh

@@ -77,6 +77,12 @@ if ! hash brew 2>/dev/null; then
   printf "Please Install HomeBrew First\n"
   exit $?
 fi
+
+
+  # Install vim-plug
+  curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    
 # Check .dotfiles has been installed
 if [ ! -d "$HOME/.dotfiles" ]; then
   echo "Installing Dotfiles for the first time"

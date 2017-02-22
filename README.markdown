@@ -1,4 +1,5 @@
 # Installation
+
 ## Auto Install
 **Please install HomeBrew first!**
 ```sh
@@ -12,3 +13,7 @@ Simply running a `git pull` inside the cloned folder
 $ cd ~/.dotfiles
 $ git pull
 ```
+
+## Optional
+
+- Install [zim](https://github.com/hungdinhvan/zim)

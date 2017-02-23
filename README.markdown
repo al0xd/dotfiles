@@ -14,6 +14,9 @@ $ cd ~/.dotfiles
 $ git pull
 ```
 
-## Optional
 
-- Install [zim](https://github.com/hungdinhvan/zim)
+
+## Related
+- [Neovim](https://github.com/neovim/neovim)
+- [Zim](https://github.com/hungdinhvan/zim)
+- [Tmux Plugins](https://github.com/tmux-plugins/tpm)

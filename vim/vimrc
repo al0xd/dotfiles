@@ -60,6 +60,8 @@ set smartindent     " Smart Indent
 set showbreak=a     " Set break character
 set scrolloff=10    " Keep at least 5 lines above & below cursor position
 
+set guifont=Menlo\ for\ Powerline
+
 " Invisible Characters
 set list                                                 " Show invisible characters.
 set listchars=tab:▸\ ,eol:↵,trail:⌴,extends:❯,precedes:❮ " List of characters to show instead of whitespace.
@@ -584,8 +586,38 @@ let g:neomake_open_list                  = 0
 " The height of quickfix list opened by Neomake
 let g:neomake_list_height                = 10
 
+"Vim Airline
+let g:airline#extensions#tabline#show_buffers = 0 " Do not show buffer in tab bar
+let g:airline#extensions#tabline#fnamemod = ':t'  " Show just the filename
 " Shows warning and error counts in vim-airline
 let g:airline#extensions#neomake#enabled = 1
+
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+
+" air-line
+let g:airline_powerline_fonts = 1
+
+let g:airline_theme='onedark'
+
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+" let g:airline_theme='base16_monokai'
+
+" unicode symbols
+" let g:airline_left_sep = '»'
+" let g:airline_left_sep = '▶'
+" let g:airline_right_sep = '«'
+" let g:airline_right_sep = '◀'
+" let g:airline_symbols.linenr = '␊'
+" let g:airline_symbols.linenr = '␤'
+" let g:airline_symbols.linenr = '¶'
+" let g:airline_symbols.branch = '⎇'
+" let g:airline_symbols.paste = 'ρ'
+" let g:airline_symbols.paste = 'Þ'
+" let g:airline_symbols.paste = '∥'
+" let g:airline_symbols.whitespace = 'Ξ'
 
 " Enable Javascript linter
 let g:neomake_javascript_enabled_makers  = ['xo']
@@ -628,7 +660,7 @@ nmap <Leader>t :NERDTreeTabsToggle<CR>
 let g:nerdtree_tabs_open_on_console_startup = 2
 "
 " Automatically find and select currently opened file in NERDTree.
-let g:nerdtree_tabs_autofind = 1
+let g:nerdtree_tabs_autofind = 0
 "
 " On startup, focus NERDTree if opening a directory, focus file if opening a file. (When set to 2, always focus file window after startup).
 let g:nerdtree_tabs_smart_startup_focus = 1
@@ -688,7 +720,8 @@ let g:NERDAltDelims_java = 1         " Set a language to use its alternate delim
 let g:NERDCommentEmptyLines = 1      " Allow commenting and inverting empty lines (useful when commenting a region)
 let g:NERDTrimTrailingWhitespace = 1 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } } " Add your own custom formats or override the defaults
-"
+let g:NERDTreeDirArrowExpandable = '▸'
+let g:NERDTreeDirArrowCollapsible = '▾'"
 
 " Rainbow Parenthesis
 let g:rbpt_colorpairs = [
@@ -724,12 +757,7 @@ let g:UltiSnipsJumpForwardTrigger="<Tab>"
 let g:UltiSnipsJumpBackwardTrigger="<S-Tab>"
 "
 
-"Vim Airline
-let g:airline_powerline_fonts = 1                 " Enable using powerline font
-let g:airline#extensions#tabline#enabled = 1      " Enable Tab line
-let g:airline#extensions#tabline#show_buffers = 0 " Do not show buffer in tab bar
-let g:airline#extensions#tabline#fnamemod = ':t'  " Show just the filename
-let g:airline_theme='onedark'                     " Set airline theme
+
 
 "Integration with vim-obsession
 let g:airline_section_z = airline#section#create(['%{ObsessionStatus(''$'', '''')}', 'windowswap', '%3p%% ', 'linenr', ':%3v '])
@@ -794,5 +822,4 @@ nmap <S-j> <Plug>MoveLineDown
 vmap <S-k> <Plug>MoveBlockUp
 vmap <S-j> <Plug>MoveBlockDown
 "
-
 " vim:foldmethod=marker:foldlevel=0

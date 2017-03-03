@@ -1,4 +1,5 @@
 # Installation
+
 ## Auto Install
 **Please install HomeBrew first!**
 ```sh
@@ -12,3 +13,12 @@ Simply running a `git pull` inside the cloned folder
 $ cd ~/.dotfiles
 $ git pull
 ```
+
+
+
+## Related
+- [Neovim](https://github.com/neovim/neovim)
+- [Zim](https://github.com/hungdinhvan/zim)
+- [Tmux](https://tmux.github.io/)
+- [Tmux Plugins](https://github.com/tmux-plugins/tpm)
+- [Z-plug](https://github.com/zplug/zplug)

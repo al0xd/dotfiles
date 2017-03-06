@@ -1,7 +1,7 @@
 # Installation
 
 ## Auto Install
-**Please install HomeBrew first!**
+**Please install HomeBrew and Zim first!**
 ```sh
 bash <(curl -s https://gl.it-s.vn/dinhhung/dotfiles/raw/master/install.sh)
 ```

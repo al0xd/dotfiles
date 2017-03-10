@@ -41,12 +41,12 @@ function insp(){
     mv "$HOME/.config/nvim" "$HOME/.config/nvim.backup"
   fi
   mkdir "$HOME/.config/nvim"
-  
+
   if [ -f "$gitconfig_file" ]; then
     mv $gitconfig_file $HOME/.gitconfig.backup
   fi
-  
-  
+
+
 
   # Create Symbolinks
   ln -s $HOME/.dotfiles/zsh/zshrc $zshrc_file
@@ -58,7 +58,7 @@ function insp(){
   ln -s $HOME/.dotfiles/git/gitconfig $gitconfig_file
   ln -s $HOME/.dotfiles/vim/vimrc $nvimconfig_file
 
-  
+
   # Install zsh plugins
   brew bundle
   # Install Ruby Bundle
@@ -69,6 +69,8 @@ function insp(){
   # Install Vim Plug
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  # Install npm packages
+  npm install -g
 }
 # End install function
 # Start Install Script
@@ -82,7 +84,7 @@ fi
   # Install vim-plug
   curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    
+
 # Check .dotfiles has been installed
 if [ ! -d "$HOME/.dotfiles" ]; then
   echo "Installing Dotfiles for the first time"

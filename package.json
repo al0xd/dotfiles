@@ -1,0 +1,25 @@
+{
+  "name": "dotflies",
+  "version": "1.0.0",
+  "description": "An collects needed package for dotfiles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gl.it-s.vn:2222/dinhhung/dotfiles.git"
+  },
+  "keywords": [
+    "dotfiles",
+    "bash script",
+    "mac osx"
+  ],
+  "author": "hung dinh van",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^3.17.1",
+    "htmlhint": "^0.9.13",
+    "stylelint": "^7.9.0"
+  }
+}

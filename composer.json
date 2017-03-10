@@ -1,0 +1,12 @@
+{
+    "name": "hungdinh/.dotfiles",
+    "description": "An collects php packages",
+    "type": "composer-plugin",
+    "authors": [
+        {
+            "name": "Hưng Đinh Văn",
+            "email": "dinhhung@it-s.vn"
+        }
+    ],
+    "require-dev": {}
+}

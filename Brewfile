@@ -53,7 +53,7 @@ brew "sshrc"
 # CLI Utilities
 brew "thefuck"
 brew "the_silver_searcher"
-
+brew "ack"
 # Workspace manager
 brew "desk"
 

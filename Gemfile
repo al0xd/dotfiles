@@ -23,6 +23,7 @@ source 'https://rubygems.org' do
   gem "docker-sync"
   gem "backup"
   gem "whenever"
+  gem "bropages" # examples for command line programs
 end
 
 # Install

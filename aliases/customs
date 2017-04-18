@@ -1,2 +1,3 @@
 alias vdot="cd ~/.dotfiles ; vi ."
 alias ll="exa -bghHliS"
+alias la="exa -abghHliS"

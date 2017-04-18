@@ -54,6 +54,7 @@ brew "sshrc"
 brew "thefuck"
 brew "the_silver_searcher"
 brew "ack"
+brew "exa" # is a modern replacement for ls
 # Workspace manager
 brew "desk"
 

@@ -9,9 +9,12 @@ endif
 set background=dark                 " Using dark background while writing code
 set termguicolors                   " Using True Colors
 syntax enable                       " Set syntax on by default
-colorscheme onedark                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
+" colorscheme onedark                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
+colorscheme OceanicNext                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
 let g:onedark_terminal_italics = 1  " Enable using italic character
 
+" Set glyphs/icons
+set encoding=utf8
 " Enable using true color in Neovim
 " For Neovim 0.1.3 and 0.1.4 < https://github.com/neovim/neovim/pull/2198 >
 if (has('nvim'))

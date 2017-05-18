@@ -42,6 +42,7 @@ Plug 'mattn/emmet-vim'                                        " Emmet for Vim
 " Code Display {{{
 Plug 'ap/vim-css-color'                " Preview colours in source code while editing
 Plug 'joshdick/onedark.vim'            " A dark Vim color scheme inspired by Atom's One Dark syntax theme.<Paste>
+Plug 'mhartington/oceanic-next'        " Oceanic-next color scheme
 Plug 'kien/rainbow_parentheses.vim'    " Mark a serie of parentheses with different colors
 Plug 'nathanaelkane/vim-indent-guides' " A Vim plugin for visually displaying indent levels in code
 " }}}
@@ -79,6 +80,10 @@ Plug 'scrooloose/nerdtree'                     " Files Explorer
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight' " Extra syntax and highlight for nerdtree files
 Plug 'vim-airline/vim-airline'                 " Lean & mean status/tabline for vim that's light as air
 Plug 'vim-airline/vim-airline-themes'          " A collection of Airline theme
+" }}}
+"
+" Graphic {{{
+Plug 'ryanoasis/vim-devicons'                 " Adds file type glyphs/icons to popular Vim plugins
 " }}}
 
 " Commands {{{

@@ -1,4 +1,4 @@
-" Quoc Hung Le's .vimrc
+" Dinh Hung's .vimrc
 
 " General {{{
 " Load Plugins
@@ -54,7 +54,7 @@ set backspace=2       " Make the backspace work like in most other programs
 set binary            " Don’t add empty newlines at the end of files
 set clipboard=unnamed " Use the OS clipboard by default
 set diffopt+=vertical " Always use vertical diffs
-set esckeys           " Allow cursor keys in insert mode
+" set esckeys           " Allow cursor keys in insert mode
 set hidden            " Hide files with unwritten changes instead of closing them
 set history=500       " Keep 500 lines of command line history
 set lazyredraw        " Don't redraw screen when running macros.
@@ -733,7 +733,7 @@ let g:neomake_info_sign = {
 nnoremap <Leader>f :NERDTreeFind<CR>
 let g:NERDTreeWinSize=30
 let g:NERDTreeShowHidden=0
-let g:NERDTreeShowLineNumbers=0
+let g:NERDTreeShowLineNumbers=1
 let g:NERDTreeMinimalUI=1
 let g:NERDTreeCascadeSingleChildDir=0
 let g:NERDTreeHighlightCursorline=1

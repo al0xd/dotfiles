@@ -67,6 +67,7 @@ brew "ripgrep"
 # GIT utilities
 brew "git-extras"
 brew "reattach-to-user-namespace"
+brew "mas"
 # Integrate with GitHub
 brew "hub"
 

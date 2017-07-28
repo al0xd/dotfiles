@@ -18,8 +18,12 @@
   "author": "hung dinh van",
   "license": "ISC",
   "dependencies": {
-    "eslint": "^3.17.1",
     "htmlhint": "^0.9.13",
     "stylelint": "^7.9.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "eslint": "^3.19.0",
+    "eslint-plugin-react": "^7.1.0"
   }
 }

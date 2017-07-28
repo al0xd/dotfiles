@@ -45,7 +45,7 @@ Plug 'joshdick/onedark.vim'            " A dark Vim color scheme inspired by Ato
 Plug 'mhartington/oceanic-next'        " Oceanic-next color scheme
 Plug 'kien/rainbow_parentheses.vim'    " Mark a serie of parentheses with different colors
 Plug 'nathanaelkane/vim-indent-guides' " A Vim plugin for visually displaying indent levels in code
-Plug 'altercation/vim-colors-solarized' "precision colorscheme for the vim text editor
+" Plug 'altercation/vim-colors-solarized' "precision colorscheme for the vim text editor
 Plug 'frankier/neovim-colors-solarized-truecolor-only'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes' " An competition of onedark theme

@@ -6,13 +6,16 @@ if filereadable(expand('~/.vimrc.bundles'))
   source ~/.vimrc.bundles
 endif
 
-set background=dark                 " Using dark background while writing code
-set termguicolors                   " Using True Colors
+set background=light                 " Using dark background while writing code
+if (has("termguicolors"))
+    set termguicolors
+  endif
 syntax enable                       " Set syntax on by default
 colorscheme onedark                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
 " colorscheme OceanicNext                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
-let g:onedark_terminal_italics = 1  " Enable using italic character
 
+let g:onedark_terminal_italics = 1  " Enable using italic character
+let g:airline_theme='molokai'
 " Set glyphs/icons
 set encoding=utf8
 " Enable using true color in Neovim
@@ -116,6 +119,11 @@ set listchars+=eol:¬   " End of line
 set listchars+=trail:· " Invisible space"
 set listchars+=extends:»
 set listchars+=precedes:«
+set listchars=space:·
+highlight WhiteSpaceBol guifg=blue
+highlight WhiteSpaceMol guifg=white
+match WhiteSpaceMol / /
+2match WhiteSpaceBol /^ \+/
 
 " Better Whitespace Settings
 highlight ExtraWhitespace ctermbg=red guibg=#e74c3c
@@ -354,6 +362,8 @@ nnoremap g# g#zz
 " Disable highlight when <leader><cr> is pressed
 noremap <silent> <leader><cr> :noh<cr>
 " }}}
+
+
 
 " Foldings {{{
 set foldcolumn=2      " Set Fold Column Width
@@ -945,16 +955,16 @@ let g:javascript_plugin_jsdoc = 1
 let g:jsx_ext_required = 0
 
 " Concealing characters
-" let g:javascript_conceal_function       = 'ƒ'
-" let g:javascript_conceal_null           = 'ø'
-" let g:javascript_conceal_this           = '@'
-" let g:javascript_conceal_return         = '⇚'
-" let g:javascript_conceal_undefined      = '¿'
-" let g:javascript_conceal_NaN            = 'ℕ'
-" let g:javascript_conceal_prototype      = '¶'
-" let g:javascript_conceal_static         = '•'
-" let g:javascript_conceal_super          = 'Ω'
-" let g:javascript_conceal_arrow_function = '⇒'
+let g:javascript_conceal_function       = 'ƒ'
+let g:javascript_conceal_null           = 'ø'
+let g:javascript_conceal_this           = '@'
+let g:javascript_conceal_return         = '⇚'
+let g:javascript_conceal_undefined      = '¿'
+let g:javascript_conceal_NaN            = 'ℕ'
+let g:javascript_conceal_prototype      = '¶'
+let g:javascript_conceal_static         = '•'
+let g:javascript_conceal_super          = 'Ω'
+let g:javascript_conceal_arrow_function = '⇒'
 " }}}
 
 " Vim Markdown {{{

@@ -1049,4 +1049,8 @@ nnoremap <S-j> <Plug>MoveLineDown
 vnoremap <S-k> <Plug>MoveBlockUp
 vnoremap <S-j> <Plug>MoveBlockDown
 " }}}
+
+" Vim Emoji Setting {{{{
+set completefunc+=emoji#complete
+" }}}}
 " vim:foldmethod=marker:foldlevel=0

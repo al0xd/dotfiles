@@ -119,7 +119,7 @@ set listchars+=eol:¬   " End of line
 set listchars+=trail:· " Invisible space"
 set listchars+=extends:»
 set listchars+=precedes:«
-set listchars=space:·
+set listchars+=space:·
 highlight WhiteSpaceBol guifg=blue
 highlight WhiteSpaceMol guifg=white
 match WhiteSpaceMol / /
@@ -833,7 +833,7 @@ call NERDTreeHighlightFile('gitignore', 'Gray', 'none', '#686868', 'none')
 
 " Programming Languages
 call NERDTreeHighlightFile('coffee', 'Red', 'none', 'red', 'none')
-call NERDTreeHighlightFile('js', 'Red', 'none', '#6460ff', 'none')
+call NERDTreeHighlightFile('js', 'Red', 'none', 'red', 'none')
 call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'none')
 call NERDTreeHighlightFile('rb', 'Magenta', 'none', '#ff00ff', 'none')
 
@@ -996,7 +996,7 @@ let g:javascript_conceal_arrow_function = '⇒'
 
 " Vim-JSX {{{{
 let g:jsx_ext_required = 0
-let g:jsx_pragma_required = 1
+" let g:jsx_pragma_required = 1
 " }}}}
 
 " Vim Markdown {{{

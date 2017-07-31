@@ -11,8 +11,16 @@ if (has("termguicolors"))
     set termguicolors
   endif
 syntax enable                       " Set syntax on by default
-colorscheme solarized                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
-" colorscheme OceanicNext                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
+let CTIME=strftime('%H')
+if ((CTIME < 18 ))
+  set background=light                 " Using dark background while writing code
+  colorscheme solarized                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
+else
+  set background=dark                 " Using dark background while writing code
+  colorscheme onedark
+  " set background=light                 " Using dark background while writing code
+  " colorscheme solarized                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
+endif
 let g:solarized_termcolors=256
 
 " let g:onedark_terminal_italics = 1  " Enable using italic character
@@ -851,7 +859,7 @@ call NERDTreeHighlightFile('md', 'blue', 'none', '#3366FF', 'none')
 
 " CSS
 call NERDTreeHighlightFile('styl', 'cyan', 'none', '#04009c', 'none')
-call NERDTreeHighlightFile('css', 'cyan', 'none', '#04009c', 'none')
+call NERDTreeHighlightFile('css', 'cyan', 'none', '#899500', 'none')
 " }}}
 
 " NERD Commenter {{{

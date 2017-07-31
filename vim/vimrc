@@ -614,7 +614,7 @@ nmap  / <Plug>(easymotion-sn)
 
 " Easy Align {{{
 " Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
-vmap <Enter> <Plug>(EasyAlign)
+vmap ga <Plug>(EasyAlign)
 
 "Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
@@ -702,7 +702,7 @@ let g:indent_guides_exclude_filetypes = ['help', 'startify', 'man', 'rogue']
 let g:neomake_serialize                  = 1  " Run each enabled maker one after the other.
 let g:neomake_serialize_abort_on_error   = 1  " Abort after the first error status is encountered
 let g:neomake_open_list                  = 2  " Preseve cursor position when quickfix window is open
-let g:neomake_list_height                = 10 " The height of quickfix list opened by Neomake
+let g:neomake_list_height                = 5 " The height of quickfix list opened by Neomake
 let g:airline#extensions#neomake#enabled = 1  " Shows warning and error counts in vim-airline
 
 " Define maker
@@ -1054,4 +1054,20 @@ vnoremap <S-j> <Plug>MoveBlockDown
 " Vim Emoji Setting {{{{
 set completefunc+=emoji#complete
 " }}}}
+
+" Vim Indentline {{{{
+let g:indentLine_setColors     = 0
+let g:indentLine_color_term    = 239
+let g:indentLine_bgcolor_term  = 202
+let g:indentLine_bgcolor_gui   = '#FF5F00'
+let g:indentLine_char          = '┆'
+" }}}}
+
+" Multiple Cusor config{{{{
+
+nnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+vnoremap <silent> <M-j> :MultipleCursorsFind <C-R>/<CR>
+
+" }}}}
+
 " vim:foldmethod=marker:foldlevel=0

@@ -127,7 +127,7 @@ set listchars+=eol:¬   " End of line
 set listchars+=trail:· " Invisible space"
 set listchars+=extends:»
 set listchars+=precedes:«
-set listchars+=space:·
+" set listchars+=space:·
 highlight WhiteSpaceBol guifg=blue
 highlight WhiteSpaceMol guifg=white
 match WhiteSpaceMol / /
@@ -702,6 +702,13 @@ let g:indent_guides_start_level = 2
 let g:indent_guides_default_mapping = 1
 let g:indent_guides_guide_size = 1
 let g:indent_guides_exclude_filetypes = ['help', 'startify', 'man', 'rogue']
+let g:indentLine_setColors     = 1
+let g:indentLine_color_term    = 239
+let g:indentLine_bgcolor_term  = 202
+" let g:indentLine_bgcolor_gui   = '#4c3b11'
+let g:indentLine_char          = '¦'
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 2
 " }}}
 
 " Neomake {{{
@@ -1061,14 +1068,6 @@ vnoremap <S-j> <Plug>MoveBlockDown
 
 " Vim Emoji Setting {{{{
 set completefunc+=emoji#complete
-" }}}}
-
-" Vim Indentline {{{{
-let g:indentLine_setColors     = 0
-let g:indentLine_color_term    = 239
-let g:indentLine_bgcolor_term  = 202
-let g:indentLine_bgcolor_gui   = '#FF5F00'
-let g:indentLine_char          = '┆'
 " }}}}
 
 " Multiple Cusor config{{{{

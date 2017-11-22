@@ -682,13 +682,14 @@ imap <c-x><c-l> <plug>(fzf-complete-line)
 " }}}
 
 " Gitgutter {{{
-let g:gitgutter_enabled            = 1
-let g:gitgutter_signs              = 1
-let g:gitgutter_highlight_lines    = 0
-let g:gitgutter_sign_column_always = 1
-let g:gitgutter_realtime           = 1
-let g:gitgutter_eager              = 0
-let g:gitgutter_max_signs          = 500
+let g:gitgutter_enabled         = 1
+let g:gitgutter_signs           = 1
+let g:gitgutter_highlight_lines = 0
+" let g:gitgutter_sign_column_always = 1
+let signcolumn                  = 1
+let g:gitgutter_realtime        = 1
+let g:gitgutter_eager           = 0
+let g:gitgutter_max_signs       = 500
 " }}}
 
 " Limelight {{{
@@ -854,10 +855,10 @@ call NERDTreeHighlightFile('php', 'Magenta', 'none', '#ff00ff', 'none')
 call NERDTreeHighlightFile('rb', 'Magenta', 'none', '#ff00ff', 'none')
 
 " Systems
-call NERDTreeHighlightFile('ini', 'yellow', 'none', '#f0f0f0', 'none')
-call NERDTreeHighlightFile('config', 'yellow', 'none', '#f0f0f0', 'none')
-call NERDTreeHighlightFile('conf', 'yellow', 'none', '#f0f0f0', 'none')
-call NERDTreeHighlightFile('yml', 'yellow', 'none', '#f0f0f0', 'none')
+call NERDTreeHighlightFile('ini', 'Gray', 'none', '#686868', 'none')
+call NERDTreeHighlightFile('config', 'Gray', 'none', '#686868', 'none')
+call NERDTreeHighlightFile('conf', 'Gray', 'none', '#686868', 'none')
+call NERDTreeHighlightFile('yml', 'Gray', 'none', '#686868', 'none')
 call NERDTreeHighlightFile('ds_store', 'Gray', 'none', '#686868', 'none')
 
 " Text

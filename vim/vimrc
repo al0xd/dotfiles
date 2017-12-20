@@ -566,6 +566,7 @@ endif
 
 " ALE  {{{
 " Setup linters
+let g:ale_sign_column_always = 1
 " let g:ale_linters = {
 "   \ 'bash':       ['shellcheck'],
 "   \ 'javascript': ['eslint'],
@@ -583,12 +584,17 @@ endif
 " \ }
 "
 " " Display waring & erros in airline
-" let g:airline#extensions#ale#enabled = 1
-" let g:ale_statusline_format = ['E:%d', 'W:%d', '✓']
+let g:airline#extensions#ale#enabled = 1
+let g:ale_statusline_format = ['e:%d', 'w:%d', '✓']
 "
 " " Custom Characters
-" let g:ale_sign_error = '➤'
-" let g:ale_sign_warning = '⚠'
+let g:ale_sign_error = '➤'
+let g:ale_sign_warning = '⚠'
+let g:ale_open_list = 1
+" Set this if you want to.
+" This can be useful if you are combining ALE with
+" some other plugin which sets quickfix errors, etc.
+let g:ale_keep_list_window_open = 1
 "
 " " Set Error Format
 " let g:ale_echo_msg_format = '[%linter%] [%severity%] %s'
@@ -714,7 +720,7 @@ let g:indentLine_conceallevel = 2
 
 " Neomake {{{
 
-" let g:neomake_verbose                    = 3  " Debug
+let g:neomake_verbose                    = 3  " Debug
 let g:neomake_serialize                  = 1  " Run each enabled maker one after the other.
 let g:neomake_serialize_abort_on_error   = 1  " Abort after the first error status is encountered
 let g:neomake_open_list                  = 2  " Preseve cursor position when quickfix window is open
@@ -933,17 +939,17 @@ let g:UltiSnipsJumpBackwardTrigger='<S-Tab>'
 
 "Vim Airline {{{
 
-let g:airline#extensions#syntastic#enabled        = 0         " Disable syntastic integration
+" let g:airline#extensions#syntastic#enabled        = 1         " Disable syntastic integration
 let g:airline#extensions#tabline#enabled          = 1         " Enable Tab line
 let g:airline#extensions#tabline#fnamemod         = ':t'      " Show just the filename in tabline
-let g:airline#extensions#tabline#show_buffers     = 0         " Do not show buffer in tab bar
+let g:airline#extensions#tabline#show_buffers     = 1         " Do not show buffer in tab bar
 let g:airline#extensions#tabline#tab_nr_type      = 1         " Show splits and tab number in tab mode.
 let g:airline#extensions#tmuxline#enabled         = 1         " Enable tmuxline integration >
 let g:airline#extensions#wordcount#enabled        = 0         " Disbale words counter by default
 let g:airline_powerline_fonts                     = 1         " Enable using powerline font
 " let g:airline_section_c                           = 0         " Diable section_c (already show tabline)
 let g:airline_theme                               = 'light' " Set airline theme
-" let g:airline_section_warning                     = 0         " Disable warning section
+let g:airline_section_warning                     = 1         " Disable warning section
 
 " Integration with vim-obsession
 let g:airline#extensions#obsession#enabled        = 1

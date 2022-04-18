@@ -11,17 +11,6 @@ if (has("termguicolors"))
     set termguicolors
   endif
 syntax enable                       " Set syntax on by default
-let CTIME=strftime('%H')
-if ((CTIME < 18 ))
-  set background=light                 " Using dark background while writing code
-  colorscheme solarized                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
-else
-  set background=dark                 " Using dark background while writing code
-  colorscheme onedark
-  " set background=light                 " Using dark background while writing code
-  " colorscheme solarized                 " A dark Vim color scheme inspired by Atom's One Dark syntax theme.
-endif
-let g:solarized_termcolors=256
 
 " let g:onedark_terminal_italics = 1  " Enable using italic character
 " Set glyphs/icons

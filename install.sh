@@ -88,7 +88,7 @@ fi
 # Check .dotfiles has been installed
 if [ ! -d "$HOME/.dotfiles" ]; then
   echo "Installing Dotfiles for the first time"
-  git clone --depth=1 http://gl.it-s.vn/dinhhung/dotfiles.git "$HOME/.dotfiles"
+  git clone --depth=1 https://github.com/hungdinhvan/dotfiles.git "$HOME/.dotfiles"
   cd "$HOME/.dotfiles"
   insp $@
 else

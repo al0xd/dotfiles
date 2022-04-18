@@ -3,7 +3,7 @@
 ## Auto Install
 **Please install HomeBrew and Zim first!**
 ```sh
-bash <(curl -s https://gl.it-s.vn/dinhhung/dotfiles/raw/master/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/hungdinhvan/dotfiles/master/install.sh)
 ```
 
 # Update

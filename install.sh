@@ -13,10 +13,10 @@ function insp(){
   # Config Symbol Links
   if [ -f "$zshrc_file" ]; then
     # Backup Old zshrc file
-    mv ~/.zshrc $HOME/.zshrc.backup
+    mv ~/.zshrc "$zshrc_file.backup"
   fi
-  if [ -f "$tmux_file" ]; then
-    mv $tmux_file $HOME/.tmux.conf.backup
+  if [ -f "$tmuxfile" ]; then
+    mv $tmux_file $tmuxfile.backup
   fi
 
   if [ -f "$gitconfig" ]; then
@@ -33,6 +33,7 @@ function insp(){
   ln -s $HOME/.dotfiles/git/gitconfig $gitconfig 
   ln -s $HOME/.dotfiles/git/gitignore $gitignore 
 
+  echo "Dotfiles installed!"
 
 }
 

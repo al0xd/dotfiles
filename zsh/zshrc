@@ -1,231 +1,113 @@
-# Start configuration added by Zim install {{{
-#
-# User configuration sourced by interactive shells
-#
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# -----------------
-# Zsh configuration
-# -----------------
+# Path to your oh-my-zsh installation.
+DEFAULT_USER=`whoami`
+export ZSH="/Users/$DEFAULT_USER/.oh-my-zsh"
 
-#
-# History
-#
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
+# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+ZSH_THEME="steeef"
 
-# Remove older command from the history if a duplicate is to be added.
-setopt HIST_IGNORE_ALL_DUPS
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
-#
-# Input/output
-#
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-# Set editor default keymap to emacs (`-e`) or vi (`-v`)
-bindkey -e
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-# Prompt for spelling correction of commands.
-#setopt CORRECT
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-# Customize spelling correction prompt.
-#SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+# Uncomment the following line to automatically update without prompting.
+# DISABLE_UPDATE_PROMPT="true"
 
-# Remove path separator from WORDCHARS.
-WORDCHARS=${WORDCHARS//[\/]}
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
+# Uncomment the following line if pasting URLs and other text is messed up.
+# DISABLE_MAGIC_FUNCTIONS=true
 
-# --------------------
-# Module configuration
-# --------------------
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-#
-# completion
-#
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
 
-# Set a custom path for the completion dump file.
-# If none is provided, the default ${ZDOTDIR:-${HOME}}/.zcompdump is used.
-#zstyle ':zim:completion' dumpfile "${ZDOTDIR:-${HOME}}/.zcompdump-${ZSH_VERSION}"
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
 
-#
-# git
-#
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
 
-# Set a custom prefix for the generated aliases. The default prefix is 'G'.
-#zstyle ':zim:git' aliases-prefix 'g'
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-#
-# input
-#
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+# HIST_STAMPS="mm/dd/yyyy"
 
-# Append `../` to your input for each `.` you type after an initial `..`
-#zstyle ':zim:input' double-dot-expand yes
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
 
-#
-# termtitle
-#
-
-# Set a custom terminal title format using prompt expansion escape sequences.
-# See http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html#Simple-Prompt-Escapes
-# If none is provided, the default '%n@%m: %~' is used.
-#zstyle ':zim:termtitle' format '%1~'
-
-#
-# zsh-autosuggestions
-#
-
-# Customize the style that the suggestions are shown with.
-# See https://github.com/zsh-users/zsh-autosuggestions/blob/master/README.md#suggestion-highlight-style
-#ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=10'
-
-#
-# zsh-syntax-highlighting
-#
-
-# Set what highlighters will be used.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters.md
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
-# Customize the main highlighter styles.
-# See https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/docs/highlighters/main.md#how-to-tweak-it
-#typeset -A ZSH_HIGHLIGHT_STYLES
-#ZSH_HIGHLIGHT_STYLES[comment]='fg=10'
-
-# ------------------
-# Initialize modules
-# ------------------
-
-if [[ ${ZIM_HOME}/init.zsh -ot ${ZDOTDIR:-${HOME}}/.zimrc ]]; then
-  # Update static initialization script if it's outdated, before sourcing it
-  source ${ZIM_HOME}/zimfw.zsh init -q
-fi
-source ${ZIM_HOME}/init.zsh
-
-# ------------------------------
-# Post-init module configuration
-# ------------------------------
-
-#
-# zsh-history-substring-search
-#
-
-# Bind ^[[A/^[[B manually so up/down works both before and after zle-line-init
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
-
-# Bind up and down keys
-zmodload -F zsh/terminfo +p:terminfo
-if [[ -n ${terminfo[kcuu1]} && -n ${terminfo[kcud1]} ]]; then
-  bindkey ${terminfo[kcuu1]} history-substring-search-up
-  bindkey ${terminfo[kcud1]} history-substring-search-down
-fi
-
-bindkey '^P' history-substring-search-up
-bindkey '^N' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-# }}} End configuration added by Zim install
-
-#
-# User configuration sourced by interactive shells
-
-if [ ! -d $HOME/go ]; then
-  export GOPATH=$HOME/go
-  export GOROOT=/usr/local/opt/go/libexec
-  export PATH=$PATH:$GOPATH/bin
-  export PATH=$PATH:$GOROOT/bin
-fi
-
-# Environment Variables Settings
-# If Neovim is installed
-if type nvim > /dev/null 2>&1;
-then
-  export EDITOR='nvim'
-  export VISUAL='nvim'
-else
-  export EDITOR='vim'
-  export VISUAL='vim'
-fi
-export PAGER='less'
-export LANG=en_US.UTF-8
-export LC_ALL=en_US.UTF-8
-
-# PATH
-path=(
-  /usr/local/bin
-  /usr/local/sbin
-  $path
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git zsh-z rails  z transfer history 
+	common-aliases fzf git-prompt gitfast npm  macos thefuck tmux
+	zsh-autosuggestions zsh-syntax-highlighting
 )
 
-export GOOGLE_APPLICATION_CREDENTIALS="/Users/hungdinh/Sites/google_api/HD-Group-c4d321b2dc6f.json"
-# Rbenv Configuration
+source $ZSH/oh-my-zsh.sh
 
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Preferred editor for local and remote sessions
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
+
+# Compilation flags
+# export ARCHFLAGS="-arch x86_64"
+
+# Set personal aliases, overriding those provided by oh-my-zsh libs,
+# plugins, and themes. Aliases can be placed here, though oh-my-zsh
+# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# For a full list of active aliases, run `alias`.
+#
+# Example aliases
+# alias zshconfig="mate ~/.zshrc"
+alias code="~/.local/bin/lvim"
+export PATH="/Users/$DEFAULT_USER/.local/bin:$PATH"
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init -)"
-
-# Flutter
-export PATH=~/development/flutter/bin:$PATH
-export PATH="/Applications/MAMP/bin/php/php7.0.33/bin:${PATH}"
-
-
-
-# Custom Programs
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh                 # Fzf
-[ -n "$DESK_ENV" ] && source "$DESK_ENV" || true       # Desk
-[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc # Phpbrew
-eval "$(hub alias -s)"                                 # Hub
-eval "$(pyenv init -)"                                 # Pyenv
-eval "$(thefuck --alias)"                              # Thefuck
-eval "$(thefuck --alias FUCK)"
-
-# PHPbrew Configuration
-[[ -e ~/.phpbrew/bashrc ]] && source ~/.phpbrew/bashrc
-
-
-# Zplug Configuration
-# Check if zplug is installed
-if [[ ! -d ~/.zplug ]]; then
-  git clone https://github.com/zplug/zplug ~/.zplug
-  source ~/.zplug/init.zsh && zplug update --self
-fi
-
-# Zplug Init file
-source ~/.zplug/init.zsh
-
-zplug "Valiev/almostontop"               # Almost On Top
-zplug "b4b4r07/enhancd", use:init.sh     # Enhanced CD
-zplug "djui/alias-tips"                  # Aliases tips
-zplug "hungdinhvan/ali"                  # Custom aliases
-zplug "k4rthik/git-cal", as:command      # Github contirbution calendar
-zplug "lukechilds/zsh-nvm"               # Node versions manager
-zplug "plugins/extract", from:oh-my-zsh  # Extracting utility
-zplug "rupa/z", use:z.sh                 # z jump
-zplug "shannonmoeller/up", use:up.sh     # Quickly navigate to a parent directory via tab-completion.
-zplug "supercrabtree/k"                  # K is the new l, yo!
-zplug "urbainvaes/fzf-marks"             # Bookmark
-zplug "voronkovich/gitignore.plugin.zsh" # Creating .gitignore files.
-# zplug "zplug/zplug"                      # Manage zplug in the same way as any other packages<Paste>
-zplug "airblade/vim-gitgutter"           # A Vim plugin which shows a git diff in the 'gutter' (sign column).
-zplug "godlygeek/tabular"                # Vim script for text filtering and alignment
-zplug "iam4x/zsh-iterm-touchbar"
-# Install packages that have not been installed yet
-if ! zplug check --verbose; then
-  printf "Install? [y/N]: "
-  if read -q; then
-    echo; zplug install
-  else
-    echo
-  fi
-fi
-
-# Source plugins & add commands to $PATH
-zplug load
-
-
-# Custom System Functions
-for file in ~/.dotfiles/{aliases,bin,system}/*; do
-	[ -r "$file" ] && [ -f "$file" ] && source "$file";
-done;
-unset file;
-# vim:foldmethod=marker:foldlevel=0
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/hungdinh/Sites/google_api/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/hungdinh/Sites/google_api/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/hungdinh/Sites/google_api/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/hungdinh/Sites/google_api/google-cloud-sdk/completion.zsh.inc'; fi
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PATH="/usr/local/opt/libpcap/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/libpcap/lib"
+export CPPFLAGS="-I/usr/local/opt/libpcap/include"
+if [ "$TMUX" = "" ]; then tmux; fi
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+export PATH="/usr/local/opt/sphinx-doc/bin:$PATH"

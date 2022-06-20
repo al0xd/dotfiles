@@ -1,7 +1,7 @@
 # set your user tokens as environment variables, such as ~/.secrets
 # See the README for examples.
 [user]
-	name = Hung Dinh Van
+	name = Alex
 	email = dinhhungvn@gmail.com
 [color]
   ui = true
@@ -113,7 +113,7 @@
   # the usual default is to push all branches
   default = upstream
 
-	editor = /usr/local/bin/nvim
+	editor = ~/.local/bin/lvim
 	excludesfile = ~/.dotfiles/git/gitignore
 [advice]
   statusHints = false
@@ -128,16 +128,3 @@
   enabled = true
 [include]
   path = .gitconfig.user
-[user]
-	name = Hưng Đinh Văn
-	email = dinhhung@it-s.vn
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path =
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[filter "lfs"]
-	clean = git-lfs clean %f
-	smudge = git-lfs smudge %f
-	required = true

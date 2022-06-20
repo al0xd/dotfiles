@@ -1,7 +1,8 @@
 # Installation
 
 ## Auto Install
-**Please install HomeBrew and Zim first!**
+**Please install [oh my zsh](https://github.com/ohmyzsh/ohmyzsh) and [LunarVim](https://github.com/LunarVim/LunarVim) first!**
+Then, open termnial and run this command:
 ```sh
 bash <(curl -s https://raw.githubusercontent.com/hungdinhvan/dotfiles/master/install.sh)
 ```
@@ -14,11 +15,3 @@ $ cd ~/.dotfiles
 $ git pull
 ```
 
-
-
-## Related
-- [Neovim](https://github.com/neovim/neovim)
-- [Zim](https://github.com/hungdinhvan/zim)
-- [Tmux](https://tmux.github.io/)
-- [Tmux Plugins](https://github.com/tmux-plugins/tpm)
-- [Z-plug](https://github.com/zplug/zplug)

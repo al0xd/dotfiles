@@ -30,4 +30,7 @@ git pull
 ./install.sh
 
 ```
+### Notes
+
+If you want an example lunarvim config file, you can use my [config file](https://github.com/hungdinhvan/lvim-config.lua)
 

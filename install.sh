@@ -29,7 +29,7 @@ function insp(){
 
   # Create Symbolinks
   ln -s $HOME/.dotfiles/zsh/zshrc $zshrc_file
-  ln -s $HOME/.dotfiles/tmux/tmux.conf $tmux_file
+  ln -s $HOME/.dotfiles/tmux/tmux.conf $tmuxfile
   ln -s $HOME/.dotfiles/git/gitconfig $gitconfig 
   ln -s $HOME/.dotfiles/git/gitignore $gitignore 
 

@@ -13,18 +13,18 @@ function insp(){
   # Config Symbol Links
   if [ -f "$zshrc_file" ]; then
     # Backup Old zshrc file
-    mv ~/.zshrc "$zshrc_file.backup"
+    mv "${zshrc_file}" "${zshrc_file}.backup"
   fi
   if [ -f "$tmuxfile" ]; then
-    mv $tmux_file $tmuxfile.backup
+    mv "${tmuxfile}" "${tmuxfile}.backup"
   fi
 
   if [ -f "$gitconfig" ]; then
-    mv $gitconfig "$gitignore.backup"
+    mv "${gitconfig}" "${gitignore}.backup"
   fi
 
   if [ -f "$gitignore" ]; then
-    mv $gitignore "$gitignore.backup"
+    mv "${gitignore}" "${gitignore}.backup"
   fi
 
   # Create Symbolinks

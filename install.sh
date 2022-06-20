@@ -5,6 +5,8 @@ unamestr=$(uname)
 zshrc_file="$HOME/.zshrc"
 vimrc_file="$HOME/.vimrc"
 tmuxfile="$HOME/.tmux.conf"
+gitconfig="$HOME/.gitconfig"
+gitignore="$HOME/.gitignore"
 set -
 # Install Packages
 function insp(){
@@ -17,11 +19,19 @@ function insp(){
     mv $tmux_file $HOME/.tmux.conf.backup
   fi
 
+  if [ -f "$gitconfig" ]; then
+    mv $gitconfig "$gitignore.backup"
+  fi
 
+  if [ -f "$gitignore" ]; then
+    mv $gitignore "$gitignore.backup"
+  fi
 
   # Create Symbolinks
   ln -s $HOME/.dotfiles/zsh/zshrc $zshrc_file
   ln -s $HOME/.dotfiles/tmux/tmux.conf $tmux_file
+  ln -s $HOME/.dotfiles/git/gitconfig $gitconfig 
+  ln -s $HOME/.dotfiles/git/gitignore $gitignore 
 
 
 }

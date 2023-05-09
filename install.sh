@@ -28,6 +28,10 @@ function insp(){
     mv "${gitignore}" "${gitignore}.backup"
   fi
 
+  if [ -f "$lvimconfig" ]; then
+    mv "${lvimconfig}" "${lvimconfig}.backup"
+  fi
+
   # Create Symbolinks
   ln -s $HOME/.dotfiles/zsh/zshrc $zshrc_file
   ln -s $HOME/.dotfiles/tmux/tmux.conf $tmuxfile

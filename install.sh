@@ -8,6 +8,7 @@ tmuxfile="$HOME/.tmux.conf"
 gitconfig="$HOME/.gitconfig"
 gitignore="$HOME/.gitignore"
 lvimconfig="$HOME/.config/lvim/config.lua"
+kittyconf="$HOME/.config/kitty/kitty.conf"
 set -
 # Install Packages
 function insp(){
@@ -31,6 +32,9 @@ function insp(){
   if [ -f "$lvimconfig" ]; then
     mv "${lvimconfig}" "${lvimconfig}.backup"
   fi
+  if [ -f "$kittyconf" ]; then
+    mv "${kittyconf}" "${kittyconf}.backup"
+  fi
 
   # Create Symbolinks
   ln -s $HOME/.dotfiles/zsh/zshrc $zshrc_file
@@ -38,6 +42,7 @@ function insp(){
   ln -s $HOME/.dotfiles/git/gitconfig $gitconfig 
   ln -s $HOME/.dotfiles/git/gitignore $gitignore 
   ln -s $HOME/.dotfiles/lunarvim/config.lua $lvimconfig 
+  ln -s $HOME/.dotfiles/kitty/kitty.conf $kittyconf 
 
   echo "Dotfiles installed!"
 

@@ -7,6 +7,7 @@ vimrc_file="$HOME/.vimrc"
 tmuxfile="$HOME/.tmux.conf"
 gitconfig="$HOME/.gitconfig"
 gitignore="$HOME/.gitignore"
+lvimconfig="$HOME/.config/lvim/config.lua"
 set -
 # Install Packages
 function insp(){
@@ -32,6 +33,7 @@ function insp(){
   ln -s $HOME/.dotfiles/tmux/tmux.conf $tmuxfile
   ln -s $HOME/.dotfiles/git/gitconfig $gitconfig 
   ln -s $HOME/.dotfiles/git/gitignore $gitignore 
+  ln -s $HOME/.dotfiles/lunarvim/config.lua $lvimconfig 
 
   echo "Dotfiles installed!"
 

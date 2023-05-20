@@ -1,3 +1,5 @@
+![Hero](./img/hero.png) 
+
 # Installation
 
 ## Auto Install
@@ -32,5 +34,5 @@ git pull
 ```
 ### Notes
 
-If you want an example lunarvim config file, you can use my [config file](https://github.com/hungdinhvan/lvim-config.lua)
+If you want an example lunarvim config file, you can use my [config file](https://github.com/al0xd/dotfiles/blob/master/lunarvim/config.lua)
 

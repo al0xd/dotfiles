@@ -6,7 +6,7 @@ A minimalist Dotfiles boilerplate for web developers
 # Installation
 
 #### Dependencies
-
+- [kitty](https://sw.kovidgoyal.net/kitty/)
 - [oh my zsh](https://github.com/ohmyzsh/ohmyzsh)
 - [LunarVim](https://github.com/LunarVim/LunarVim)
 - [Powerlevel10k zsh theme](https://github.com/romkatv/powerlevel10k)

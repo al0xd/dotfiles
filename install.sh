@@ -4,7 +4,7 @@
 unamestr=$(uname)
 zshrc_file="$HOME/.zshrc"
 vimrc_file="$HOME/.vimrc"
-tmuxfile="$HOME/.tmux.conf"
+# tmuxfile="$HOME/.tmux.conf"
 gitconfig="$HOME/.gitconfig"
 gitignore="$HOME/.gitignore"
 lvimconfig="$HOME/.config/lvim/config.lua"
@@ -17,9 +17,9 @@ function insp(){
     # Backup Old zshrc file
     mv "${zshrc_file}" "${zshrc_file}.backup"
   fi
-  if [ -f "$tmuxfile" ]; then
-    mv "${tmuxfile}" "${tmuxfile}.backup"
-  fi
+  # if [ -f "$tmuxfile" ]; then
+  #   mv "${tmuxfile}" "${tmuxfile}.backup"
+  # fi
 
   if [ -f "$gitconfig" ]; then
     mv "${gitconfig}" "${gitignore}.backup"

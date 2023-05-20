@@ -1,16 +1,23 @@
 ![Hero](./img/hero.png) 
+# Introduction
+
+A minimalist Dotfiles boilerplate for web developers
 
 # Installation
 
-## Auto Install
-**Please install [oh my zsh](https://github.com/ohmyzsh/ohmyzsh) and [LunarVim](https://github.com/LunarVim/LunarVim) first!**
+#### Dependencies
 
+- [oh my zsh](https://github.com/ohmyzsh/ohmyzsh)
+- [LunarVim](https://github.com/LunarVim/LunarVim)
+- [Powerlevel10k zsh theme](https://github.com/romkatv/powerlevel10k)
 
-Then, open termnial and run this command:
+#### Auto Install
+
+Open termnial and run this command:
 ```sh
 bash <(curl -s https://raw.githubusercontent.com/al0xd/dotfiles/master/install.sh)
 ```
-## Manual installation
+#### Manual installation
 ```sh
 # cd to home 
 cd ~
@@ -23,7 +30,7 @@ sudo chmod +x ./install.sh
 
 ```
 
-# Update
+## Update
 Simply running a `git pull` inside the cloned folder
 
 ```sh
@@ -32,7 +39,7 @@ git pull
 ./install.sh
 
 ```
-### Notes
+### Contributors
 
-If you want an example lunarvim config file, you can use my [config file](https://github.com/al0xd/dotfiles/blob/master/lunarvim/config.lua)
+- [Alex Dinh](https://github.com/al0xd)
 

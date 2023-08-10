@@ -49,13 +49,15 @@ lvim.plugins = {
   },
   {
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
+    build = "cd app && npm install",
     ft = "markdown",
     config = function()
       vim.g.mkdp_auto_start = 1
     end,
   },
-
+  {
+    "kristijanhusak/vim-carbon-now-sh"
+  }
   -- {
   --   "ethanholz/nvim-lastplace",
   --   event = "BufRead",
@@ -100,3 +102,11 @@ code_actions.setup {
     name = "proselint",
   },
 }
+vim.cmd [[
+  augroup remember_folds
+    autocmd!
+    autocmd BufWinLeave *.* mkview
+    autocmd BufWinEnter *.* silent! loadview
+  augroup END
+]]
+vim.cmd('autocmd BufRead,BufNewFile .env lua vim.diagnostic.disable()')

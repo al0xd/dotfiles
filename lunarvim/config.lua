@@ -13,18 +13,136 @@ vim.opt.wrap = true -- wrap lines
 -- use treesitter folding
 vim.opt.foldmethod = "expr"
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-
 lvim.transparent_window = true
-lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "onedark"
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.format_on_save.enabled = false
 lvim.log.level = "warn"
 lvim.builtin.lualine.style = "default"
 lvim.plugins = {
+  {
+    'navarasu/onedark.nvim',
+    config = function()
+      require('onedark').setup {
+        style = 'deep',
+        transparent = true,  -- Show/hide background
+        term_colors = true, -- Change terminal color as per the selected theme style
+        ending_tildes = false, -- Show the end-of-buffer tildes. By default they are hidden
+        cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
+
+        -- toggle theme style ---
+        toggle_style_key = nil, -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+        toggle_style_list = {'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light'}, -- List of styles to toggle between
+
+        -- Change code style ---
+        -- Options are italic, bold, underline, none
+        -- You can configure multiple style with comma separated, For e.g., keywords = 'italic,bold'
+        code_style = {
+            comments = 'italic',
+            keywords = 'bold',
+            functions = 'bold,underline',
+            strings = 'italic',
+            variables = 'none'
+        },
+
+        -- Lualine options --
+        lualine = {
+            transparent = false, -- lualine center bar transparency
+        },
+
+        -- Custom Highlights --
+        colors = {}, -- Override default colors
+        highlights = {}, -- Override highlight groups
+
+        -- Plugins Config --
+        diagnostics = {
+            darker = true, -- darker colors for diagnostic
+            undercurl = true,   -- use undercurl instead of underline for diagnostics
+            background = true,    -- use background color for virtual text
+        },
+      }
+    end
+  },
   -- {
-  --   "Pocco81/auto-save.nvim",
+  --   "marko-cerovac/material.nvim",
   --   config = function()
-  --     require("auto-save").setup()
+  --     vim.g.material_style = "deep ocean"
+  --     require('material').setup({
+
+  --         contrast = {
+  --             terminal = true, -- Enable contrast for the built-in terminal
+  --             sidebars = true, -- Enable contrast for sidebar-like windows ( for example Nvim-Tree )
+  --             floating_windows = false, -- Enable contrast for floating windows
+  --             cursor_line = false, -- Enable darker background for the cursor line
+  --             lsp_virtual_text = false, -- Enable contrasted background for lsp virtual text
+  --             non_current_windows = false, -- Enable contrasted background for non-current windows
+  --             filetypes = {}, -- Specify which filetypes get the contrasted (darker) background
+  --         },
+
+  --         styles = { -- Give comments style such as bold, italic, underline etc.
+  --             comments = {  italic = true },
+  --             strings = {italic = true },
+  --             keywords = { underline = true },
+  --             functions = { bold = true },
+  --             variables = {},
+  --             operators = {},
+  --             types = {},
+  --         },
+
+  --         plugins = { -- Uncomment the plugins that you use to highlight them
+  --             -- Available plugins:
+  --             -- "coc",
+  --             -- "colorful-winsep",
+  --             -- "dap",
+  --             -- "dashboard",
+  --             -- "eyeliner",
+  --             -- "fidget",
+  --             -- "flash",
+  --             -- "gitsigns",
+  --             -- "harpoon",
+  --             -- "hop",
+  --             -- "illuminate",
+  --             -- "indent-blankline",
+  --             -- "lspsaga",
+  --             -- "mini",
+  --             -- "neogit",
+  --             -- "neotest",
+  --             -- "neo-tree",
+  --             -- "neorg",
+  --             -- "noice",
+  --             -- "nvim-cmp",
+  --             -- "nvim-navic",
+  --             -- "nvim-tree",
+  --             -- "nvim-web-devicons",
+  --             -- "rainbow-delimiters",
+  --             -- "sneak",
+  --             -- "telescope",
+  --             "trouble",
+  --             -- "which-key",
+  --             -- "nvim-notify",
+  --         },
+
+  --         disable = {
+  --             colored_cursor = false, -- Disable the colored cursor
+  --             borders = false, -- Disable borders between verticaly split windows
+  --             background = false, -- Prevent the theme from setting the background (NeoVim then uses your terminal background)
+  --             term_colors = false, -- Prevent the theme from setting terminal colors
+  --             eob_lines = false -- Hide the end-of-buffer lines
+  --         },
+
+  --         high_visibility = {
+  --             lighter = false, -- Enable higher contrast text for lighter style
+  --             darker = false -- Enable higher contrast text for darker style
+  --         },
+
+  --         lualine_style = "default", -- Lualine style ( can be 'stealth' or 'default' )
+
+  --         async_loading = true, -- Load parts of the theme asyncronously for faster startup (turned on by default)
+
+  --         custom_colors = nil, -- If you want to override the default colors, set this to a function
+
+  --         custom_highlights = {}, -- Overwrite highlights with your own
+  --     })
   --   end,
   -- },
   -- {
@@ -40,6 +158,19 @@ lvim.plugins = {
   --   end,
   -- },
   --
+  {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require('nvim-treesitter').setup {
+        options = {
+          theme = 'onedark'
+        }
+      }
+    end
+  },
+  {
+    'sindrets/diffview.nvim'
+  },
   {
     "f-person/git-blame.nvim",
     event = "BufRead",
@@ -184,40 +315,6 @@ lvim.plugins = {
             -- Options go here
         })
     end
-  },
-  {
-    "nvim-neo-tree/neo-tree.nvim",
-    branch = "v2.x",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      "nvim-tree/nvim-web-devicons",
-      "MunifTanjim/nui.nvim",
-    },
-    config = function()
-      require("neo-tree").setup({
-        close_if_last_window = true,
-        window = {
-          width = 30,
-        },
-        buffers = {
-          follow_current_file = true,
-        },
-        filesystem = {
-          follow_current_file = true,
-          filtered_items = {
-            hide_dotfiles = false,
-            hide_gitignored = false,
-            hide_by_name = {
-              "node_modules"
-            },
-            never_show = {
-              ".DS_Store",
-              "thumbs.db"
-            },
-          },
-        },
-      })
-    end
   }
   -- {
   --   "ethanholz/nvim-lastplace",
@@ -271,3 +368,7 @@ vim.cmd [[
   augroup END
 ]]
 vim.cmd('autocmd BufRead,BufNewFile .env lua vim.diagnostic.disable()')
+
+lvim.icons.ui.Folder = "󰉋"
+lvim.builtin.nvimtree.setup.renderer.icons.show.git = true
+lvim.builtin.nvimtree.setup.renderer.icons.glyphs.git = { staged = "✓", untracked = "★" }

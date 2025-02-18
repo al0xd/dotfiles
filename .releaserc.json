@@ -4,14 +4,7 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "angular",
-        "releaseRules": [
-          { "type": "feat", "release": "minor" },
-          { "type": "fix", "release": "patch" },
-          { "type": "perf", "release": "patch" },
-          { "type": "/^FC-\\d+$/", "release": "patch" },
-          { "type": "/^FC \\d+$/", "release": "patch" }
-        ]
+        "preset": "cz-conventional-changelog-for-jira"
       }
     ],
     ["semantic-release-jira-notes", {

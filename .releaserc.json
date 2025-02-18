@@ -4,25 +4,22 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "conventionalcommits",
+        "preset": "eslint",
         "releaseRules": [
-          { "type": "FC", "release": "patch" },
-          { "type": "FC-*", "release": "patch" },
-          { "type": "fc", "release": "patch" }
-        ],
-        "parserOpts": {
-          "noteKeywords": ["FC", "fc"]
-        }
+          { "message": "FC", "release": "patch" },
+          { "message": "*README*", "release": "patch" },
+          { "message": "fc", "release": "patch" }
+        ]
       }
     ],
     [
       "@semantic-release/release-notes-generator",
       {
-        "preset": "conventionalcommits",
+        "preset": "eslint",
         "presetConfig": {
           "types": [
-              {"type": "FC", "section": "Task" },
-              {"type": "fc", "section": "Task" }
+              {"message": "*FC*", "section": "Task" },
+              {"message": "*fc*", "section": "Task" }
           ],
           "parserOpts": {
             "noteKeywords": ["FC", "fc"]

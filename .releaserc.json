@@ -1,22 +1,31 @@
 {
   "branches": ["master"],
   "plugins": [
-    ["@semantic-release/commit-analyzer", {
-      "preset": "eslint",
-      "releaseRules": [
-        { "tag": "FC-*", "release": "patch" },
-        { "tag": "New", "release": "patch" }
-      ],
-      "parserOpts": {
-        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "angular",
+        "releaseRules": [
+          { "type": "feat", "release": "minor" },
+          { "type": "fix", "release": "patch" },
+          { "type": "perf", "release": "patch" },
+          { "type": "/^FC-\\d+$/", "release": "patch" },
+          { "type": "/^FC \\d+$/", "release": "patch" }
+        ]
       }
-    }],
+    ],
     ["semantic-release-jira-notes", {
       "jiraHost": "fordeer.atlassian.net",
       "ticketPrefixes": ["FC"]
     }],
     "@semantic-release/changelog",
+    "@semantic-release/npm",
     "@semantic-release/git",
-    "@semantic-release/github"
+    [
+      "@semantic-release/github",
+      {
+        "labels": ["semantic-release"]
+      }
+    ]
   ]
 }

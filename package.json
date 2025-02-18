@@ -1,13 +1,18 @@
 {
   "devDependencies": {
+    "@digitalroute/cz-conventional-changelog-for-jira": "^8.0.1",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
+    "commitizen": "^4.3.1",
     "conventional-changelog-conventionalcommits": "^8.0.0",
     "conventional-changelog-eslint": "^6.0.0",
-    "semantic-release": "^24.2.3"
+    "install": "^0.13.0",
+    "npm": "^11.1.0",
+    "semantic-release": "^24.2.3",
+    "semantic-release-jira-notes": "^4.0.0"
   },
   "name": "dotfiles",
   "version": "1.0.0",
@@ -93,7 +98,6 @@
     "index-to-position": "^0.1.2",
     "inherits": "^2.0.4",
     "ini": "^1.3.8",
-    "install": "^0.13.0",
     "into-stream": "^7.0.0",
     "is-arrayish": "^0.2.1",
     "is-extglob": "^2.1.1",
@@ -139,7 +143,6 @@
     "node-emoji": "^2.2.0",
     "normalize-package-data": "^6.0.2",
     "normalize-url": "^8.0.1",
-    "npm": "^10.9.2",
     "npm-run-path": "^6.0.0",
     "object-assign": "^4.1.1",
     "onetime": "^6.0.0",

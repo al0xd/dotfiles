@@ -9,10 +9,10 @@
           { "type": "feat", "release": "minor" },
           { "type": "fix", "release": "patch" },
           { "type": "perf", "release": "patch" },
-          { "type": "/^FC.*$/", "release": "patch" }
+          { "type": "/^[Ff][Cc].*$/", "release": "patch" }
         ],
         "parserOpts": {
-          "headerPattern": "^([Ff][Cc][- ]?(\\d+)):\\s*(.+)$",
+          "headerPattern": "^([Ff][Cc][- ]?\\d+)(?:\\(([^)]+)\\))?:\\s*(.+)$",
           "headerCorrespondence": ["type", "scope", "subject"]
         }
       }

@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/al0xd/dotfiles/compare/v1.3.0...v1.4.0) (2025-02-18)
+
+
+### Features
+
+* **deps:** releases notes ([c66c81a](https://github.com/al0xd/dotfiles/commit/c66c81af6f9b292d0ce5d84881939f0ea306a7cd))
+
 # [1.3.0](https://github.com/al0xd/dotfiles/compare/v1.2.0...v1.3.0) (2025-02-18)
 
 

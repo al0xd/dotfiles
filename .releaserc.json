@@ -12,7 +12,7 @@
           { "type": "/^FC.*$/", "release": "patch" }
         ],
         "parserOpts": {
-          "headerPattern": "^(?i)(FC[- ]?(\\d+)):\\s*(.+)$",
+          "headerPattern": "^([Ff][Cc][- ]?(\\d+)):\\s*(.+)$",
           "headerCorrespondence": ["type", "scope", "subject"]
         }
       }

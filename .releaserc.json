@@ -14,8 +14,7 @@
         ],
         "parserOpts": {
           "headerPattern": "^(FC[- ]\\d+):?\\s*(.*)$",
-          "headerCorrespondence": ["type", "subject"],
-          "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
+          "headerCorrespondence": ["type", "subject"]
         }
       }
     ],

@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/al0xd/dotfiles/compare/v1.4.0...v1.5.0) (2025-02-18)
+
+
+### Features
+
+* **deps:** remove npm ([ce90629](https://github.com/al0xd/dotfiles/commit/ce9062995b554b165c56abf4ce1e1ba6a811560e))
+
 # [1.4.0](https://github.com/al0xd/dotfiles/compare/v1.3.0...v1.4.0) (2025-02-18)
 
 

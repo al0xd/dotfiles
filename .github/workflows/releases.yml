@@ -17,6 +17,7 @@ jobs:
         with:
           fetch-depth: '0'  # Lấy đầy đủ lịch sử commit
           ref: master
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:

@@ -4,11 +4,18 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": {
-          "name": "conventionalchangelog",
-          "issuePrefixes": ["FC-"],
-          "issueUrlFormat": "https://fordeer.atlassian.net/{{prefix}}-{{id}}"
-        }
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+            { "type": "/^FC-\\d+$/", "release": "patch" },
+            { "type": "/^FC \\d+$/", "release": "patch" }
+          ],
+          "issuePrefixes": "FC"
+        },
+        "releaseRules": [
+          { "type": "/^FC-\\d+$/", "release": "patch" },
+          { "type": "/^FC \\d+$/", "release": "patch" }
+        ]
       }
     ],
     ["semantic-release-jira-notes", {

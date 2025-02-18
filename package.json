@@ -1,5 +1,8 @@
 {
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
     "semantic-release": "^24.2.3"
   },
@@ -188,8 +191,8 @@
     "spdx-license-ids": "^3.0.21",
     "split2": "^1.0.0",
     "stream-combiner2": "^1.1.1",
-    "string-width": "^4.2.3",
     "string_decoder": "^1.1.1",
+    "string-width": "^4.2.3",
     "strip-ansi": "^6.0.1",
     "strip-bom": "^3.0.0",
     "strip-final-newline": "^4.0.0",

@@ -2,9 +2,10 @@
   "branches": ["master"],
   "plugins": [
     ["@semantic-release/commit-analyzer", {
-      "preset": "angular",
+      "preset": "eslint",
       "releaseRules": [
-        {"type": "*", "release": "patch"}
+        { "tag": "FC-*", "release": "patch" },
+        { "tag": "New", "release": "patch" }
       ],
       "parserOpts": {
         "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]

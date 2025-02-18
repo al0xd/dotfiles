@@ -4,7 +4,11 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "cz-conventional-changelog-for-jira"
+        "preset": {
+          "name": "conventionalchangelog",
+          "issuePrefixes": ["FC-"],
+          "issueUrlFormat": "https://fordeer.atlassian.net/{{prefix}}-{{id}}"
+        }
       }
     ],
     ["semantic-release-jira-notes", {

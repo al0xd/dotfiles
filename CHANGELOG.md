@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/al0xd/dotfiles/compare/v1.6.0...v1.6.1) (2025-02-18)
+
+
+### Bug Fixes
+
+* **[FC-458](https://fordeer.atlassian.net/browse/FC-458):** update releases.yml ([2b78000](https://github.com/al0xd/dotfiles/commit/2b7800013771cf7bb77fb0d1d4c819168c37970e))
+
 # [1.6.0](https://github.com/al0xd/dotfiles/compare/v1.5.0...v1.6.0) (2025-02-18)
 
 

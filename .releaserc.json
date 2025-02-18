@@ -12,8 +12,8 @@
           { "type": "/^FC.*$/", "release": "patch" }
         ],
         "parserOpts": {
-          "headerPattern": "^(FC[^:]*):\\s*(.+)$",
-          "headerCorrespondence": ["type", "subject"]
+          "headerPattern": "^(?i)(FC[- ]?(\\d+)):\\s*(.+)$",
+          "headerCorrespondence": ["type", "scope", "subject"]
         }
       }
     ],

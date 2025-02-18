@@ -1,27 +1,11 @@
 {
   "branches": ["master"],
   "plugins": [
-    [
-      "@semantic-release/commit-analyzer",
-      {
-        "preset": "conventionalcommits",
-        "releaseRules": [
-          { "type": "feat", "release": "minor" },
-          { "type": "fix", "release": "patch" },
-          { "type": "perf", "release": "patch" },
-          { "type": "/^[Ff][Cc].*$/", "release": "patch" }
-        ],
-        "parserOpts": {
-          "headerPattern": "^([Ff][Cc][- ]?\\d+)(?:\\(([^)]+)\\))?:\\s*(.+)$",
-          "headerCorrespondence": ["type", "scope", "subject"]
-        }
-      }
-    ],
+    "@semantic-release/commit-analyzer",
     ["semantic-release-jira-notes", {
       "jiraHost": "fordeer.atlassian.net",
       "ticketPrefixes": ["FC"]
     }],
-    "@semantic-release/changelog",
     "@semantic-release/git",
     "@semantic-release/github"
   ]

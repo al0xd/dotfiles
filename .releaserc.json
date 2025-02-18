@@ -6,16 +6,11 @@
       {
         "preset": "conventionalcommits",
         "releaseRules": [
-          { "type": "docs", "release": "patch" },
-          { "type": "refactor", "release": "patch" },
-          { "type": "fix", "release": "patch" },
-          { "type": "style", "release": "patch" },
-          { "type": "chore", "release": "patch" },
           { "type": "FC", "release": "patch" },
           { "type": "fc", "release": "patch" }
         ],
         "parserOpts": {
-          "noteKeywords": ["BREAKING CHANGE", "FC", "fc"]
+          "noteKeywords": ["FC", "fc"]
         }
       }
     ],
@@ -25,19 +20,11 @@
         "preset": "conventionalcommits",
         "presetConfig": {
           "types": [
-              {"type": "feat", "section": "Features"},
               {"type": "FC", "section": "Task" },
-              {"type": "fc", "section": "Task" },
-              {"type": "fix", "section": "Bug Fixes"},
-              {"type": "chore", "section": "Bug Fixes"},
-              {"type": "docs", "hidden": true},
-              {"type": "style", "hidden": true},
-              {"type": "refactor", "hidden": true},
-              {"type": "perf", "hidden": true},
-              {"type": "test", "hidden": true}
+              {"type": "fc", "section": "Task" }
           ],
           "parserOpts": {
-            "noteKeywords": ["BREAKING CHANGE", "FC", "fc"]
+            "noteKeywords": ["FC", "fc"]
           },
           "issuePrefixes": ["FC"],
           "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",

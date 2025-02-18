@@ -4,11 +4,18 @@
     [
       "@semantic-release/commit-analyzer",
       {
-        "preset": "eslint",
+        "preset": "conventionalcommits",
         "releaseRules": [
-          { "message": "FC", "release": "patch" },
-          { "message": "fc", "release": "patch" }
-        ]
+          {"type": "feat", "release": "minor"},
+          {"type": "fix", "release": "patch"},
+          {"type": "perf", "release": "patch"},
+          {"type": "BREAKING CHANGE", "release": "major"},
+          {"type": "FC", "release": "patch"}
+        ],
+        "parserOpts": {
+          "headerPattern": "^(FC-\\d+) (.+)$",
+          "headerCorrespondence": ["type", "subject"]
+        }
       }
     ],
     ["semantic-release-jira-notes", {

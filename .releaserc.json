@@ -1,15 +1,15 @@
 {
   "branches": ["master"],
   "plugins": [
-    [
-      "@semantic-release/commit-analyzer",
-      {
-        "preset": "conventionalcommits",
-        "releaseRules": [
-          { "type": "*", "release": "patch" }
-        ]
+    ["@semantic-release/commit-analyzer", {
+      "preset": "angular",
+      "releaseRules": [
+        {"type": "*", "release": "patch"}
+      ],
+      "parserOpts": {
+        "noteKeywords": ["BREAKING CHANGE", "BREAKING CHANGES"]
       }
-    ],
+    }],
     ["semantic-release-jira-notes", {
       "jiraHost": "fordeer.atlassian.net",
       "ticketPrefixes": ["FC"]

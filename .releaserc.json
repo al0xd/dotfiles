@@ -6,6 +6,7 @@
       "jiraHost": "fordeer.atlassian.net",
       "ticketPrefixes": ["FC"]
     }],
+    "@semantic-release/changelog",
     "@semantic-release/git",
     "@semantic-release/github"
   ]

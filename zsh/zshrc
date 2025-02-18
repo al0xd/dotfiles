@@ -71,7 +71,8 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git z zsh-autosuggestions zsh-syntax-highlighting zsh_codex)
+bindkey '^X' create_completion
 
 source $ZSH/oh-my-zsh.sh
 
@@ -131,3 +132,10 @@ export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/openssl@1.1/lib/pkgconfig"
 export RUBY_CONFIGURE_OPTS="--with-openssl-dir=/opt/homebrew/opt/openssl@1.1"
+export PATH="/Users/alex/.deno/bin:$PATH"
+
+function denoflare {
+    deno run --unstable-worker-options --allow-read --allow-net --allow-env --allow-run \
+    https://raw.githubusercontent.com/skymethod/denoflare/v0.6.0/cli/cli.ts "$@"
+}
+export PATH="/opt/homebrew/opt/libpq/bin:$PATH"

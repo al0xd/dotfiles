@@ -1,0 +1,72 @@
+{
+  "branches": ["master"],
+  "plugins": [
+    [
+      "@semantic-release/commit-analyzer",
+      {
+        "preset": "conventionalcommits",
+        "releaseRules": [
+          { "type": "docs", "release": "patch" },
+          { "type": "refactor", "release": "patch" },
+          { "type": "fix", "release": "patch" },
+          { "type": "style", "release": "patch" },
+          { "type": "chore", "release": "patch" },
+          { "type": "FC", "release": "patch" },
+          { "type": "fc", "release": "patch" }
+        ],
+        "parserOpts": {
+          "noteKeywords": ["BREAKING CHANGE", "FC", "fc"]
+        }
+      }
+    ],
+    [
+      "@semantic-release/release-notes-generator",
+      {
+        "preset": "conventionalcommits",
+        "presetConfig": {
+          "types": [
+              {"type": "feat", "section": "Features"},
+              {"type": "FC", "section": "Task" },
+              {"type": "fc", "section": "Task" },
+              {"type": "fix", "section": "Bug Fixes"},
+              {"type": "chore", "section": "Bug Fixes"},
+              {"type": "docs", "hidden": true},
+              {"type": "style", "hidden": true},
+              {"type": "refactor", "hidden": true},
+              {"type": "perf", "hidden": true},
+              {"type": "test", "hidden": true}
+          ],
+          "parserOpts": {
+            "noteKeywords": ["BREAKING CHANGE", "FC", "fc"]
+          },
+          "issuePrefixes": ["FC"],
+          "commitUrlFormat": "{{host}}/{{owner}}/{{repository}}/commits/{{hash}}",
+          "compareUrlFormat": "{{host}}/{{owner}}/{{repository}}/compare/{{currentTag}}%0D{{previousTag}}#diff",
+          "issueUrlFormat": "https://fordeer.atlassian.net/browse/{{prefix}}{{id}}"
+          }
+      }
+    ],
+    [
+      "semantic-release-slack-bot",
+      {
+        "notifyOnSuccess": false,
+        "notifyOnFail": false,
+        "slackWebhook": "https://hooks.slack.com/services/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",
+        "branchesConfig": [
+          {
+            "pattern": "lts/*",
+            "notifyOnFail": true
+          },
+          {
+            "pattern": "master",
+            "notifyOnSuccess": true,
+            "notifyOnFail": true
+          }
+        ]
+      }
+    ],
+    "@semantic-release/changelog",
+    "@semantic-release/git",
+    "@semantic-release/github"
+  ]
+}

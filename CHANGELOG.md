@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/al0xd/dotfiles/compare/v1.5.0...v1.6.0) (2025-02-18)
+
+
+### Features
+
+* **[FC-458](https://fordeer.atlassian.net/browse/FC-458):** update releases.yml ([790e8f7](https://github.com/al0xd/dotfiles/commit/790e8f7f0acff2f458f268a6f7a9e0bdb0608a4f))
+
 # [1.5.0](https://github.com/al0xd/dotfiles/compare/v1.4.0...v1.5.0) (2025-02-18)
 
 

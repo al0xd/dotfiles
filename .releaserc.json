@@ -7,7 +7,6 @@
         "preset": "eslint",
         "releaseRules": [
           { "message": "FC", "release": "patch" },
-          { "message": "*README*", "release": "patch" },
           { "message": "fc", "release": "patch" }
         ]
       }

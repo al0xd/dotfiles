@@ -11,11 +11,7 @@
           { "type": "perf", "release": "patch" },
           { "type": "/^FC-\\d+$/", "release": "patch" },
           { "type": "/^FC \\d+$/", "release": "patch" }
-        ],
-        "parserOpts": {
-          "headerPattern": "^(FC[- ]\\d+):?\\s*(.*)$",
-          "headerCorrespondence": ["type", "subject"]
-        }
+        ]
       }
     ],
     ["semantic-release-jira-notes", {

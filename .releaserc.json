@@ -11,6 +11,7 @@
         { "type": "bug", "release": "patch" },
         { "type": "hotfix", "release": "patch" },
         { "type": "BREAKING CHANGE", "release": "major" },
+        { "type": "chore", "release": "patch" },
         { "type": "default", "release": "patch" }
       ],
       "parserOpts": {

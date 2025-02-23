@@ -19,6 +19,13 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
           echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
+      - name: Generate New Tag Version
+        id: new_tag
+        run: |
+          NEW_VERSION=$(npx semantic-release --dry-run | grep -oP 'next release version is \K[0-9]+\.[0-9]+\.[0-9]+' || echo "0.0.1")
+          NEW_TAG="v$NEW_VERSION"
+          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
+
       - name: Generate Changelog from All Commits (with JIRA links)
         run: |
           echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
@@ -44,33 +51,43 @@ jobs:
           echo "" >> CHANGELOG.md
           cat CHANGELOG.md
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
-
       - name: Commit & Push Changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions@users.noreply.github.com"
+          git config --global user.name "Semantic Release Bot"
+          git config --global user.email "semantic-release-bot@users.noreply.github.com"
           git add CHANGELOG.md
-          git commit -m "feature(releases): update changelog"
-          git push
+          git commit -m "chore(release): update changelog"
+          git push origin main
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
       - name: Install dependencies
-        run: npm ci --force
+        run: npm install
+
+      - name: Install Semantic Release
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github
 
       - name: Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
-      
+
+      - name: Create New Git Tag
+        run: |
+          git tag ${{ env.NEW_TAG }}
+          git push origin ${{ env.NEW_TAG }}
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.LAST_TAG }}
-          name: "Release ${{ env.LAST_TAG }}"
+          tag_name: ${{ env.NEW_TAG }}
+          name: "Release ${{ env.NEW_TAG }}"
           body_path: CHANGELOG.md
           draft: false
           prerelease: false

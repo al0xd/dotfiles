@@ -16,8 +16,7 @@
       ],
       "parserOpts": {
         "headerPattern": "^(FC-\\d+):\\s?(.*)$",
-        "headerCorrespondence": ["fcKey", "type", "message"],
-        "issuePrefixes": ["FC-"]
+        "headerCorrespondence": ["type", "message"]
       }
     }],
     ["@semantic-release/release-notes-generator"],

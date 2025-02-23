@@ -13,37 +13,26 @@ jobs:
           fetch-depth: '0'  # Lấy đầy đủ lịch sử commit
           ref: master
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20
+      - name: Get last release tag
+        id: last_tag
+        run: echo "LAST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")" >> $GITHUB_ENV
 
-      - name: Install dependencies
-        run: npm ci --force
-
-      - name: Install Semantic Release
-        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github conventional-changelog-conventionalcommits
-
-      - name: Run Semantic Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
-      
-      - name: Generate Changelog from PR Commits
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Changelog from All Commits
         run: |
           echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
           echo "" >> CHANGELOG.md
 
-          PRS=$(gh pr list --state merged --base main --json number,title,body,mergedAt --limit 100)
+          LAST_TAG=${{ env.LAST_TAG }}
+          echo "Fetching commits since: $LAST_TAG"
 
-          echo "$PRS" | jq -r '.[] | "- **PR #" + (.number|tostring) + "**: " + .title' >> CHANGELOG.md
+          git log $LAST_TAG..HEAD --pretty=format:"- %h %s" >> CHANGELOG.md
           
           echo "" >> CHANGELOG.md
-
           cat CHANGELOG.md
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
       - name: Commit & Push Changelog
         run: |
@@ -53,6 +42,15 @@ jobs:
           git commit -m "chore(release): update changelog"
           git push
 
+      - name: Install dependencies
+        run: npm ci --force
+
+      - name: Run Semantic Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
+      
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:

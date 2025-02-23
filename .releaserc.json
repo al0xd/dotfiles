@@ -10,8 +10,14 @@
           { "type": "fix", "release": "patch" },
           { "type": "perf", "release": "patch" },
           { "type": "/^FC-\\d+$/", "release": "patch" },
-          { "type": "/^FC \\d+$/", "release": "patch" }
-        ]
+          { "type": "/^FC \\d+$/", "release": "patch" },
+          { "type": "default", "release": "patch" }
+        ],
+        "parserOpts": {
+          "headerPattern": "^(FC-\\d+):\\s?(\\w+)?\\s?-?\\s?(.*)$",
+          "headerCorrespondence": ["jiraKey", "type", "message"],
+          "issuePrefixes": ["FC-"]
+        }
       }
     ],
     ["semantic-release-jira-notes", {

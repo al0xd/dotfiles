@@ -1,5 +1,7 @@
 ## Changelog - 2025-02-23
 
+- [FC-123](https://jira.company.com/browse/FC-123): Test releases (d3d0db2)
+- chore(release): update changelog (83ea771)
 - [FC-123](https://jira.company.com/browse/FC-123): Test releases (e2e1ce8)
 - [FC-123](https://jira.company.com/browse/FC-123): Test releases (48e7e51)
 - [FC-123](https://jira.company.com/browse/FC-123): Test releases (246cfc0)

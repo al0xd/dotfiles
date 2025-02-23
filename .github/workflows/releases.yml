@@ -19,7 +19,7 @@ jobs:
           LATEST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
           echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
-      - name: Generate Changelog from All Commits
+      - name: Generate Changelog from All Commits (with JIRA links)
         run: |
           echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
           echo "" >> CHANGELOG.md
@@ -27,10 +27,23 @@ jobs:
           LAST_TAG=${{ env.LAST_TAG }}
           echo "Fetching commits since: $LAST_TAG"
 
-          git log $LAST_TAG..HEAD --pretty=format:"- %h %s" >> CHANGELOG.md
+          git log $LAST_TAG..HEAD --pretty=format:"%h %s" | while read -r line; do
+            COMMIT_ID=$(echo $line | awk '{print $1}')
+            MESSAGE=$(echo $line | cut -d' ' -f2-)
+
+            if [[ $MESSAGE =~ (FC-[0-9]+) ]]; then
+              JIRA_KEY="${BASH_REMATCH[1]}"
+              JIRA_URL="[${JIRA_KEY}](https://jira.company.com/browse/${JIRA_KEY})"
+              FORMATTED_MESSAGE="${MESSAGE//$JIRA_KEY/$JIRA_URL}"
+              echo "- $FORMATTED_MESSAGE ($COMMIT_ID)" >> CHANGELOG.md
+            else
+              echo "- $MESSAGE ($COMMIT_ID)" >> CHANGELOG.md
+            fi
+          done
           
           echo "" >> CHANGELOG.md
           cat CHANGELOG.md
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:

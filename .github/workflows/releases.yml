@@ -21,8 +21,45 @@ jobs:
       - name: Install dependencies
         run: npm ci --force
 
+      - name: Install Semantic Release
+        run: npm install -g semantic-release @semantic-release/changelog @semantic-release/git @semantic-release/github
+
       - name: Run Semantic Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: npx semantic-release
+      
+      - name: Generate Changelog from PR Commits
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
+          PRS=$(gh pr list --state merged --base main --json number,title,body,mergedAt --limit 100)
+
+          echo "$PRS" | jq -r '.[] | "- **PR #" + (.number|tostring) + "**: " + .title' >> CHANGELOG.md
+          
+          echo "" >> CHANGELOG.md
+
+          cat CHANGELOG.md
+
+      - name: Commit & Push Changelog
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "chore(release): update changelog"
+          git push
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: "v$(date +%Y.%m.%d)"
+          name: "Daily Release - $(date +%Y-%m-%d)"
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

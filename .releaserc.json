@@ -1,29 +1,33 @@
 {
   "branches": ["master"],
   "plugins": [
-    [
-      "@semantic-release/commit-analyzer",
-      {
-        "preset": "angular",
-        "releaseRules": [
-          { "type": "feat", "release": "minor" },
-          { "type": "fix", "release": "patch" },
-          { "type": "perf", "release": "patch" },
-          { "type": "default", "release": "patch" }
-        ],
-        "parserOpts": {
-          "headerPattern": "^(FC-\\d+):\\s?(\\w+)?\\s?-?\\s?(.*)$",
-          "headerCorrespondence": ["jiraKey", "type", "message"],
-          "issuePrefixes": ["FC-"]
-        }
+    ["@semantic-release/commit-analyzer", {
+      "preset": "conventionalcommits",
+      "releaseRules": [
+        { "type": "feature", "release": "minor" },
+        { "type": "enhancement", "release": "minor" },
+        { "type": "fix", "release": "patch" },
+        { "type": "bug", "release": "patch" },
+        { "type": "hotfix", "release": "patch" },
+        { "type": "BREAKING CHANGE", "release": "major" },
+        { "type": "default", "release": "patch" }
+      ],
+      "parserOpts": {
+        "headerPattern": "^(FC-\\d+):\\s?(\\w+)?\\s?-?\\s?(.*)$",
+        "headerCorrespondence": ["fcKey", "type", "message"],
+        "issuePrefixes": ["FC-"]
       }
-    ],
-    ["semantic-release-jira-notes", {
-      "jiraHost": "fordeer.atlassian.net",
-      "ticketPrefixes": ["FC"]
     }],
-    "@semantic-release/changelog",
-    "@semantic-release/git",
-    "@semantic-release/github"
+    ["@semantic-release/release-notes-generator"],
+    ["@semantic-release/changelog", {
+      "changelogFile": "CHANGELOG.md"
+    }],
+    ["@semantic-release/github", {
+      "assets": "dist/**"
+    }],
+    ["@semantic-release/git", {
+      "assets": ["CHANGELOG.md", "package.json"],
+      "message": "chore(release): ${nextRelease.version} [skip ci]"
+    }]
   ]
 }

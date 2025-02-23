@@ -5,6 +5,7 @@
       "preset": "conventionalcommits",
       "releaseRules": [
         { "type": "feature", "release": "minor" },
+        { "type": "FC", "release": "patch" },
         { "type": "enhancement", "release": "minor" },
         { "type": "fix", "release": "patch" },
         { "type": "bug", "release": "patch" },
@@ -13,7 +14,7 @@
         { "type": "default", "release": "patch" }
       ],
       "parserOpts": {
-        "headerPattern": "^(FC-\\d+):\\s?(\\w+)?\\s?-?\\s?(.*)$",
+        "headerPattern": "^(FC-\\d+):\\s?(.*)$",
         "headerCorrespondence": ["fcKey", "type", "message"],
         "issuePrefixes": ["FC-"]
       }

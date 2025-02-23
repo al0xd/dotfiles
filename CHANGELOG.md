@@ -1,5 +1,7 @@
 ## Changelog - 2025-02-23
 
+- [FC-123](https://jira.company.com/browse/FC-123): Test deployment (0b45bbc)
+- chore(release): update changelog (78a2cb9)
 - [FC-123](https://jira.company.com/browse/FC-123): Format changelog (00461ab)
 - chore(release): update changelog (ff7beaf)
 - [FC-123](https://jira.company.com/browse/FC-123): last_tag (ae1a1d4)

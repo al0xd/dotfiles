@@ -1,5 +1,7 @@
 ## Changelog - 2025-02-23
 
+- ae1a1d4 FC-123: last_tag
+- 9c2f755 chore(release): update changelog
 - b463ef8 FC-123: conventional-changelog-conventionalcommits
 - 266f9cc chore(release): update changelog
 - e96f2ae FC-123: conventional-changelog-conventionalcommits

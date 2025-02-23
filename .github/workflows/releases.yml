@@ -13,9 +13,11 @@ jobs:
           fetch-depth: '0'  # Lấy đầy đủ lịch sử commit
           ref: master
 
-      - name: Get last release tag
+      - name: Get Last Semantic Release Tag
         id: last_tag
-        run: echo "LAST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")" >> $GITHUB_ENV
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 || echo "v0.0.0")
+          echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
       - name: Generate Changelog from All Commits
         run: |
@@ -54,8 +56,8 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: "v$(date +%Y.%m.%d)"
-          name: "Daily Release - $(date +%Y-%m-%d)"
+          tag_name: ${{ env.LAST_TAG }}
+          name: "Release ${{ env.LAST_TAG }}"
           body_path: CHANGELOG.md
           draft: false
           prerelease: false

@@ -99,5 +99,6 @@ jobs:
           release_body: "${{ env.RELEASE_BODY }}"
           draft: false
           prerelease: false
+          bump_version_scheme: minor
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

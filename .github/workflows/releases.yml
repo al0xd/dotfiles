@@ -94,3 +94,33 @@ jobs:
           echo "" >> CHANGELOG.md
           cat CHANGELOG.md
         shell: bash
+
+      - name: Commit & Push Changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "Release Bot"
+          git config --global user.email "release-bot@users.noreply.github.com"
+          git add CHANGELOG.md
+          git commit -m "chore(release): update changelog"
+          git push origin master
+        shell: bash
+
+      - name: Read Changelog Content
+        id: changelog
+        run: |
+          CHANGELOG_CONTENT=$(cat CHANGELOG.md)
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+        shell: bash
+
+      - name: Create GitHub Release using `rymndhng/release-on-push-action`
+        uses: rymndhng/release-on-push-action@master
+        with:
+          bump_version_scheme: patch
+          release_body: "${{ env.RELEASE_BODY }}"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -6,7 +6,7 @@ on:
   workflow_dispatch:  # Cho phép chạy thủ công nếu cần
   push:
     branches:
-      - master  # Chạy nếu có commit mới vào nhánh main
+      - master  # Chạy nếu có commit mới vào nhánh master
 
 jobs:
   check-changes:
@@ -21,22 +21,10 @@ jobs:
         with:
           fetch-depth: 0  
 
-      - name: Get Last Release Tag
-        id: last_tag
-        run: |
-          LATEST_TAG=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1)
-          if [[ -z "$LATEST_TAG" ]]; then
-            LATEST_TAG="v1.7.0"
-          fi
-          echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
-
       - name: Check for new commits from users
         id: check
         run: |
-          LAST_TAG=${{ env.LAST_TAG }}
-          echo "Checking commits since: $LAST_TAG"
-
-          NEW_COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"%h %s" | grep -Ev "chore\(release\): update changelog" | wc -l || echo 0)
+          NEW_COMMITS=$(git log --pretty=format:"%h %s" -n 10 | grep -Ev "chore\(release\): update changelog" | wc -l || echo 0)
 
           if [[ "$NEW_COMMITS" -gt 0 ]]; then
             echo "✅ Có $NEW_COMMITS commit mới từ người dùng. Tiến hành release!"
@@ -50,7 +38,7 @@ jobs:
         shell: bash
 
   release:
-    name: Create Tag & GitHub Release
+    name: Create GitHub Release (No Tag)
     needs: check-changes
     if: needs.check-changes.outputs.has_changes == 'true'  # Chỉ chạy nếu có commit từ người dùng
     runs-on: ubuntu-latest
@@ -61,41 +49,18 @@ jobs:
         with:
           fetch-depth: 0  
 
-      - name: Generate New Tag Version
-        id: new_tag
-        run: |
-          LAST_TAG=${{ env.LAST_TAG }}
-          MAJOR=$(echo $LAST_TAG | cut -d'.' -f1 | tr -d 'v')
-          MINOR=$(echo $LAST_TAG | cut -d'.' -f2)
-          PATCH=$(echo $LAST_TAG | cut -d'.' -f3)
-
-          if [[ "$PATCH" -eq 9 ]]; then
-            MINOR=$((MINOR+1))
-            PATCH=1
-          else
-            PATCH=$((PATCH+1))
-          fi
-
-          NEW_TAG="v${MAJOR}.${MINOR}.${PATCH}"
-          echo "NEW_TAG=$NEW_TAG" >> $GITHUB_ENV
-          echo "new_tag=$NEW_TAG" >> $GITHUB_OUTPUT
-        shell: bash
-
       - name: Generate Changelog from All Commits (with JIRA links)
         run: |
           echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
           echo "" >> CHANGELOG.md
 
-          LAST_TAG=${{ env.LAST_TAG }}
-          echo "Fetching commits since: $LAST_TAG"
-
-          git log $LAST_TAG..HEAD --pretty=format:"%h %s" | while read -r line; do
+          git log --pretty=format:"%h %s" -n 20 | while read -r line; do
             COMMIT_ID=$(echo $line | awk '{print $1}')
             MESSAGE=$(echo $line | cut -d' ' -f2-)
 
             if [[ $MESSAGE =~ (FC-[0-9]+) ]]; then
               JIRA_KEY="${BASH_REMATCH[1]}"
-              JIRA_URL="[${JIRA_KEY}](https://jira.company.com/browse/${JIRA_KEY})"
+              JIRA_URL="[${JIRA_KEY}](https://fordeer.atlassian.net/browse/${JIRA_KEY})"
               FORMATTED_MESSAGE="${MESSAGE//$JIRA_KEY/$JIRA_URL}"
               echo "- $FORMATTED_MESSAGE ($COMMIT_ID)" >> CHANGELOG.md
             else
@@ -118,18 +83,20 @@ jobs:
           git push origin master
         shell: bash
 
-      - name: Create New Git Tag
+      - name: Read Changelog Content
+        id: changelog
         run: |
-          git tag ${{ env.NEW_TAG }}
-          git push origin ${{ env.NEW_TAG }}
+          CHANGELOG_CONTENT=$(cat CHANGELOG.md)
+          echo "RELEASE_BODY<<EOF" >> $GITHUB_ENV
+          echo "$CHANGELOG_CONTENT" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
         shell: bash
 
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Create GitHub Release using `rymndhng/release-on-push-action`
+        uses: rymndhng/release-on-push-action@master
         with:
-          tag_name: ${{ env.NEW_TAG }}
-          name: "Release ${{ env.NEW_TAG }}"
-          body_path: CHANGELOG.md
+          release_name: "Latest Release"
+          release_body: "${{ env.RELEASE_BODY }}"
           draft: false
           prerelease: false
         env:

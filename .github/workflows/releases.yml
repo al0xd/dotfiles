@@ -58,7 +58,7 @@ jobs:
         shell: bash
 
   release:
-    name: Create GitHub Release (No Tag)
+    name: Create GitHub Release
     needs: check-changes
     if: needs.check-changes.outputs.has_changes == 'true'  # Chỉ chạy nếu có commit từ người dùng
     runs-on: ubuntu-latest
@@ -73,7 +73,7 @@ jobs:
 
       - name: Generate Changelog from New Commits Only (with JIRA links)
         run: |
-          echo "## Whatnews? - $(date +%Y-%m-%d)" > CHANGELOG.md
+          echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
           echo "" >> CHANGELOG.md
 
           echo "Fetching commits since: $LAST_TAG"
@@ -83,7 +83,7 @@ jobs:
 
             if [[ $MESSAGE =~ (FC-[0-9]+) ]]; then
               JIRA_KEY="${BASH_REMATCH[1]}"
-              JIRA_URL="[${JIRA_KEY}](https://jira.company.com/browse/${JIRA_KEY})"
+              JIRA_URL="[${JIRA_KEY}](https://fordeer.atlassian.net/${JIRA_KEY})"
               FORMATTED_MESSAGE="${MESSAGE//$JIRA_KEY/$JIRA_URL}"
               echo "- $FORMATTED_MESSAGE ($COMMIT_ID)" >> CHANGELOG.md
             else

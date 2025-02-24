@@ -21,10 +21,22 @@ jobs:
         with:
           fetch-depth: 0  
 
+      - name: Get Last Release Tag
+        id: last_tag
+        run: |
+          LATEST_TAG=$(git describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*" || echo "")
+          if [[ -z "$LATEST_TAG" ]]; then
+            LATEST_TAG=$(git rev-list --max-parents=0 HEAD)  # Lấy commit đầu tiên nếu chưa có tag
+          fi
+          echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
+
       - name: Check for new commits from users
         id: check
         run: |
-          NEW_COMMITS=$(git log --pretty=format:"%h %s" -n 10 | grep -Ev "chore\(release\): update changelog" | wc -l || echo 0)
+          LAST_TAG=${{ env.LAST_TAG }}
+          echo "Checking commits since: $LAST_TAG"
+
+          NEW_COMMITS=$(git log $LAST_TAG..HEAD --pretty=format:"%h %s" | grep -Ev "chore\(release\): update changelog" | wc -l || echo 0)
 
           if [[ "$NEW_COMMITS" -gt 0 ]]; then
             echo "✅ Có $NEW_COMMITS commit mới từ người dùng. Tiến hành release!"
@@ -49,18 +61,21 @@ jobs:
         with:
           fetch-depth: 0  
 
-      - name: Generate Changelog from All Commits (with JIRA links)
+      - name: Generate Changelog from New Commits Only (with JIRA links)
         run: |
           echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
           echo "" >> CHANGELOG.md
 
-          git log --pretty=format:"%h %s" -n 20 | while read -r line; do
+          LAST_TAG=${{ env.LAST_TAG }}
+          echo "Fetching commits since: $LAST_TAG"
+
+          git log $LAST_TAG..HEAD --pretty=format:"%h %s" | while read -r line; do
             COMMIT_ID=$(echo $line | awk '{print $1}')
             MESSAGE=$(echo $line | cut -d' ' -f2-)
 
             if [[ $MESSAGE =~ (FC-[0-9]+) ]]; then
               JIRA_KEY="${BASH_REMATCH[1]}"
-              JIRA_URL="[${JIRA_KEY}](https://fordeer.atlassian.net/browse/${JIRA_KEY})"
+              JIRA_URL="[${JIRA_KEY}](https://jira.company.com/browse/${JIRA_KEY})"
               FORMATTED_MESSAGE="${MESSAGE//$JIRA_KEY/$JIRA_URL}"
               echo "- $FORMATTED_MESSAGE ($COMMIT_ID)" >> CHANGELOG.md
             else
@@ -99,6 +114,5 @@ jobs:
           draft: false
           prerelease: false
           bump_version_scheme: patch
-          use_github_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

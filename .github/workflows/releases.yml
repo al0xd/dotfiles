@@ -24,10 +24,12 @@ jobs:
       - name: Get Last Release Tag
         id: last_tag
         run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*" || echo "")
+          LATEST_TAG=$(git describe --tags --abbrev=0 --match "v[0-9]*.[0-9]*.[0-9]*" 2>/dev/null || echo "")
+
           if [[ -z "$LATEST_TAG" ]]; then
             LATEST_TAG=$(git rev-list --max-parents=0 HEAD)  # Lấy commit đầu tiên nếu chưa có tag
           fi
+
           echo "LAST_TAG=$LATEST_TAG" >> $GITHUB_ENV
 
       - name: Check for new commits from users
@@ -110,9 +112,9 @@ jobs:
       - name: Create GitHub Release using `rymndhng/release-on-push-action`
         uses: rymndhng/release-on-push-action@master
         with:
+          bump_version_scheme: patch
           release_body: "${{ env.RELEASE_BODY }}"
           draft: false
           prerelease: false
-          bump_version_scheme: patch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,4 +1,5 @@
-## Whatnews? - 2025-02-24
+## Changelog - 2025-02-24
 
-- [FC-577](https://jira.company.com/browse/FC-577): auto notes (6da29bd)
+- Merge branch 'master' of github.com:al0xd/dotfiles (661f482)
+- chore(release): update releases (660f0d7)
 

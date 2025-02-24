@@ -1,5 +1,7 @@
 ## Changelog - 2025-02-24
 
+- [FC-123](https://fordeer.atlassian.net/browse/FC-123): Test releases (3d64611)
+- chore(release): update changelog (0f5f8cf)
 - [FC-123](https://fordeer.atlassian.net/browse/FC-123): Test releases (93d3c16)
 - chore(release): update changelog (f2af3b3)
 - [FC-123](https://fordeer.atlassian.net/browse/FC-123): Test releases (63e8231)
@@ -17,6 +19,4 @@
 - Merge branch 'master' of github.com:al0xd/dotfiles (11488b2)
 - [FC-123](https://fordeer.atlassian.net/browse/FC-123): feature - Test releases (2f8ac58)
 - chore(release): update changelog (0171fab)
-- [FC-123](https://fordeer.atlassian.net/browse/FC-123)(chore): Test releases (0cecbe7)
-- chore(release): update changelog (1407012)
 

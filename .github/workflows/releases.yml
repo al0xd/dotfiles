@@ -95,11 +95,10 @@ jobs:
       - name: Create GitHub Release using `rymndhng/release-on-push-action`
         uses: rymndhng/release-on-push-action@master
         with:
-          release_name: "Latest Release"
           release_body: "${{ env.RELEASE_BODY }}"
           draft: false
           prerelease: false
-          bump_version_scheme: minor
-          use_github_release_notes: false
+          bump_version_scheme: patch
+          use_github_release_notes: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

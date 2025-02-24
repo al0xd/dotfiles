@@ -100,5 +100,6 @@ jobs:
           draft: false
           prerelease: false
           bump_version_scheme: minor
+          use_github_release_notes: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

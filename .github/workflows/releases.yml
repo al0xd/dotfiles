@@ -73,7 +73,7 @@ jobs:
 
       - name: Generate Changelog from New Commits Only (with JIRA links)
         run: |
-          echo "## Changelog - $(date +%Y-%m-%d)" > CHANGELOG.md
+          echo "## Whatnews? - $(date +%Y-%m-%d)" > CHANGELOG.md
           echo "" >> CHANGELOG.md
 
           echo "Fetching commits since: $LAST_TAG"
@@ -119,6 +119,7 @@ jobs:
         uses: rymndhng/release-on-push-action@master
         with:
           bump_version_scheme: patch
+          use_github_release_notes: true
           release_body: "${{ env.RELEASE_BODY }}"
           draft: false
           prerelease: false

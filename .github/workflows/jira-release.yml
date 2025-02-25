@@ -18,11 +18,17 @@ jobs:
         with:
           fetch-depth: 0  
 
-      - name: Get latest release version and project name
+      - name: Get latest tag and project name
         id: get_info
         run: |
-          echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          LATEST_TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+          echo "VERSION=$LATEST_TAG" >> $GITHUB_ENV
           echo "PROJECT_NAME=${{ github.repository }}" >> $GITHUB_ENV
+
+      - name: Debug release info
+        run: |
+          echo "Release Version: $VERSION"
+          echo "Project Name: $PROJECT_NAME"
 
       - name: Send Incoming Webhook to Jira
         run: |

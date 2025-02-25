@@ -1,8 +1,9 @@
 name: Create Jira Release via Webhook
 
 on:
-  release:
-    types: [published, created, prereleased]
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
 
 permissions:

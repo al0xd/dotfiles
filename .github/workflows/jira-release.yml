@@ -1,10 +1,10 @@
 name: Create Jira Release via Webhook
 
 on:
-  push:
-    tags:
-      - 'v*'
-  workflow_dispatch:
+  workflow_run:
+    workflows: [Daily Release]
+    types:
+      - completed
 
 permissions:
   contents: read  # Cho phép đọc thông tin release
@@ -23,8 +23,6 @@ jobs:
         run: |
           echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
           echo "PROJECT_NAME=${{ github.repository }}" >> $GITHUB_ENV
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Send Incoming Webhook to Jira
         run: |
@@ -38,5 +36,3 @@ jobs:
             }
           }' \
           "${{ secrets.JIRA_WEBHOOK_URL }}"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

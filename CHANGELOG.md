@@ -1,5 +1,4 @@
-## Changelog - 2025-02-24
+## Changelog - 2025-02-25
 
-- Merge branch 'master' of github.com:al0xd/dotfiles (661f482)
-- chore(release): update releases (660f0d7)
+- [FC-548](https://fordeer.atlassian.net/FC-548): auto release jira (bc8c377)
 

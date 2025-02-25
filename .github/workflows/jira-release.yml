@@ -5,6 +5,8 @@ on:
     types: [published, created, prereleased]
   workflow_dispatch:
 
+permissions:
+  contents: read  # Cho phép đọc thông tin release
 jobs:
   send-jira-webhook:
     runs-on: ubuntu-latest

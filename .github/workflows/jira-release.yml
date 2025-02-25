@@ -28,12 +28,12 @@ jobs:
       - name: Extract Jira issues and changelog content
         id: extract_data
         run: |
-          if [ -f CHANGELOG.MD ]; then
-            echo "Reading CHANGELOG.MD..."
-            cat CHANGELOG.MD  # Debug nội dung file
+          if [ -f CHANGELOG.md ]; then
+            echo "Reading CHANGELOG.md..."
+            cat CHANGELOG.md  # Debug nội dung file
             
             # Lấy danh sách Jira Key theo format như FC-2345
-            ISSUES=$(grep -oE '[A-Z]{2,}-[0-9]+' CHANGELOG.MD | sort -u)
+            ISSUES=$(grep -oE '[A-Z]{2,}-[0-9]+' CHANGELOG.md | sort -u)
             
             if [ -z "$ISSUES" ]; then
               ISSUES="[]"  # Nếu không có issue nào, trả về mảng rỗng JSON
@@ -41,10 +41,10 @@ jobs:
               ISSUES=$(echo "$ISSUES" | jq -R -s -c 'split("\n")[:-1]')
             fi
 
-            # Đọc toàn bộ nội dung CHANGELOG.MD và escape JSON
-            CHANGELOG_CONTENT=$(jq -Rs '.' < CHANGELOG.MD)
+            # Đọc toàn bộ nội dung CHANGELOG.md và escape JSON
+            CHANGELOG_CONTENT=$(jq -Rs '.' < CHANGELOG.md)
           else
-            echo "File CHANGELOG.MD not found!"
+            echo "File CHANGELOG.md not found!"
             ISSUES="[]"
             CHANGELOG_CONTENT="\"No changelog available\""
           fi

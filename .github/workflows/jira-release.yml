@@ -25,10 +25,21 @@ jobs:
           echo "VERSION=$LATEST_TAG" >> $GITHUB_ENV
           echo "PROJECT_NAME=${{ github.repository }}" >> $GITHUB_ENV
 
+      - name: Extract Jira issues from CHANGELOG.MD
+        id: extract_issues
+        run: |
+          if [ -f CHANGELOG.MD ]; then
+            ISSUES=$(grep -oE '[A-Z]{2,}-[0-9]+' CHANGELOG.MD | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          else
+            ISSUES="[]"
+          fi
+          echo "ISSUES=$ISSUES" >> $GITHUB_ENV
+
       - name: Debug release info
         run: |
           echo "Release Version: $VERSION"
           echo "Project Name: $PROJECT_NAME"
+          echo "Jira Issues: $ISSUES"
 
       - name: Send Incoming Webhook to Jira
         run: |
@@ -38,7 +49,8 @@ jobs:
           --data '{
             "data": {
               "releaseVersion": "'"${VERSION}"'",
-              "projectName": "'"${PROJECT_NAME}"'"
+              "projectName": "'"${PROJECT_NAME}"'",
+              "issues": '"${ISSUES}"'
             }
           }' \
           "${{ secrets.JIRA_WEBHOOK_URL }}"

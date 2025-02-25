@@ -25,11 +25,11 @@ jobs:
           echo "VERSION=$LATEST_TAG" >> $GITHUB_ENV
           echo "PROJECT_NAME=${{ github.repository }}" >> $GITHUB_ENV
 
-      - name: Extract Jira issues from CHANGELOG.MD
+      - name: Extract Jira issues from CHANGELOG.md
         id: extract_issues
         run: |
-          if [ -f CHANGELOG.MD ]; then
-            ISSUES=$(grep -oE '[A-Z]{2,}-[0-9]+' CHANGELOG.MD | sort -u | jq -R -s -c 'split("\n")[:-1]')
+          if [ -f CHANGELOG.md ]; then
+            ISSUES=$(grep -oE '[A-Z]{2,}-[0-9]+' CHANGELOG.md | sort -u | jq -R -s -c 'split("\n")[:-1]')
           else
             ISSUES="[]"
           fi

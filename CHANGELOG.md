@@ -1,4 +1,4 @@
 ## Changelog - 2025-02-25
 
-- [FC-548](https://fordeer.atlassian.net/FC-548): auto release jira (ecba23b)
+- [FC-548](https://fordeer.atlassian.net/FC-548): auto release jira (27f7662)
 

@@ -14,9 +14,11 @@ jobs:
         with:
           fetch-depth: 0  
 
-      - name: Get latest release version
-        id: get_version
-        run: echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+      - name: Get latest release version and project name
+        id: get_info
+        run: |
+          echo "VERSION=${{ github.event.release.tag_name }}" >> $GITHUB_ENV
+          echo "PROJECT_NAME=${{ github.repository }}" >> $GITHUB_ENV
 
       - name: Send Incoming Webhook to Jira
         run: |
@@ -25,7 +27,8 @@ jobs:
           -H "X-Automation-Webhook-Token: ${{ secrets.JIRA_WEBHOOK_TOKEN }}" \
           --data '{
             "data": {
-              "releaseVersion": "'"${VERSION}"'"
+              "releaseVersion": "'"${VERSION}"'",
+              "projectName": "'"${PROJECT_NAME}"'"
             }
           }' \
           "${{ secrets.JIRA_WEBHOOK_URL }}"

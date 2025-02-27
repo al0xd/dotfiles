@@ -1,4 +1,4 @@
-## Changelog - 2025-02-25
+## Changelog - 2025-02-27
 
-- [FC-548](https://fordeer.atlassian.net/FC-548): fix error file CHANGELOG.md (a35ef21)
+- Rename README.mad to README.md (dcdec2c)
 

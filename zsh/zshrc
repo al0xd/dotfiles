@@ -135,7 +135,6 @@ alias clr='cloudflared tunnel --loglevel debug run'
 alias fssh='fly ssh console'
 alias fsshc='fly ssh console --pty -C "bin/rails console"'
 alias flog='fly logs'
-export NPM_TOKEN=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
 
 
 # rbenv

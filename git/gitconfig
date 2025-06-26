@@ -3,6 +3,7 @@
 [user]
 	name = Alex
 	email = dinhhungvn@gmail.com
+	signingkey = /Users/alex/.ssh/id_rsa.pub
 [color]
   ui = true
 [color "branch"]
@@ -132,3 +133,9 @@
 	rebase = false
 [core]
 	excludesfile = /Users/alex/.gitignore
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[safe]
+	directory = /Users/alex/Downloads/actions-runner/_work/shopify-product-badge/shopify-product-badge

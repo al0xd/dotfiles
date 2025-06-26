@@ -121,6 +121,21 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 alias ibrew='arch -x86_64 /usr/local/bin/brew'
 export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
 
+# personal alias
+# Docker
+alias dcu='docker compose up --remove-orphans'
+alias dc='docker compose'
+alias dce='docker compose exec'
+alias dcb='docker compose build'
+alias dcd='docker compose down'
+# cloudflared
+alias clr='cloudflared tunnel --loglevel debug run'
+#Fly
+alias fssh='fly ssh console'
+alias fsshc='fly ssh console --pty -C "bin/rails console"'
+alias flog='fly logs'
+export NPM_TOKEN=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
+
 
 # rbenv
 export RBENV_ROOT=/opt/homebrew/opt/rbenv
@@ -139,3 +154,21 @@ function denoflare {
     https://raw.githubusercontent.com/skymethod/denoflare/v0.6.0/cli/cli.ts "$@"
 }
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export DOCKER_BUILDKIT=1
+
+#load env
+[ -f ~/.dotfiles/.env ] && source ~/.dotfiles/.env
+
+
+# The following lines have been added by Docker Desktop to enable Docker CLI completions.
+fpath=(/Users/alex/.docker/completions $fpath)
+autoload -Uz compinit
+compinit
+# End of Docker CLI completions
+
+# Added by Windsurf
+export PATH="/Users/alex/.codeium/windsurf/bin:$PATH"
+
+dcbe() {
+  docker compose exec -it "$1" bash
+}

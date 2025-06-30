@@ -1,87 +1,205 @@
 #!/usr/bin/env bash
 
-# Dinh Hung's Dotfiles - Refactored by AI
-# Script cài đặt và backup dotfiles an toàn, rõ ràng
+# Dinh Hung's Dotfiles - Refactored Version  
+# Script cài đặt và backup dotfiles an toàn, rõ ràng, dễ mở rộng
 
-set -e
+set -eo pipefail
 
-# Định nghĩa đường dẫn nguồn và đích
-DOTFILES_DIR="$HOME/dotfiles"
-ZSHRC_SRC="$DOTFILES_DIR/zsh/zshrc"
-ZSHRC_DEST="$HOME/.zshrc"
-TMUX_SRC="$DOTFILES_DIR/tmux/tmux.conf"
-TMUX_DEST="$HOME/.tmux.conf"
-GITCONFIG_SRC="$DOTFILES_DIR/git/gitconfig"
-GITCONFIG_DEST="$HOME/.gitconfig"
-GITIGNORE_SRC="$DOTFILES_DIR/git/gitignore"
-GITIGNORE_DEST="$HOME/.gitignore"
-LVIM_SRC="$DOTFILES_DIR/lunarvim/config.lua"
-LVIM_DEST="$HOME/.config/lvim/config.lua"
-KITTY_SRC="$DOTFILES_DIR/kitty/kitty.conf"
-KITTY_DEST="$HOME/.config/kitty/kitty.conf"
+# ===== CONFIGURATION =====
+readonly SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/dotfiles}"
+readonly REPO_URL="https://github.com/al0xd/dotfiles.git"
 
-# Hàm backup file nếu tồn tại, không ghi đè backup cũ
+# Định nghĩa dotfiles mapping - tương thích với bash cũ (macOS default)
+# Format: "source_path|destination_path"
+readonly DOTFILE_MAPPINGS=(
+  "zsh/zshrc|$HOME/.zshrc"
+  "git/gitconfig|$HOME/.gitconfig"
+  "git/gitignore|$HOME/.gitignore"
+  "lunarvim/config.lua|$HOME/.config/lvim/config.lua"
+  "kitty/kitty.conf|$HOME/.config/kitty/kitty.conf"
+)
+
+# ===== LOGGING FUNCTIONS =====
+log_info() {
+  echo "ℹ️  $*"
+}
+
+log_success() {
+  echo "✅ $*"
+}
+
+log_warn() {
+  echo "⚠️  $*"
+}
+
+log_error() {
+  echo "❌ $*" >&2
+}
+
+# ===== UTILITY FUNCTIONS =====
+# Kiểm tra và tạo thư mục nếu chưa tồn tại
+ensure_directory() {
+  local dir="$1"
+  if [[ ! -d "$dir" ]]; then
+    log_info "Tạo thư mục: $dir"
+    mkdir -p "$dir"
+  fi
+}
+
+# Backup file với timestamp nếu cần thiết
 backup_file() {
   local file="$1"
-  if [ -f "$file" ] || [ -L "$file" ]; then
-    local backup_file="${file}.backup"
-    if [ -e "$backup_file" ]; then
-      backup_file="${file}.backup.$(date +%Y%m%d%H%M%S)"
-    fi
-    echo "Backup $file -> $backup_file"
-    mv "$file" "$backup_file"
+  
+  # Bỏ qua nếu file không tồn tại
+  [[ ! -e "$file" && ! -L "$file" ]] && return 0
+  
+  local backup_file="${file}.backup"
+  
+  # Nếu backup đã tồn tại, thêm timestamp
+  if [[ -e "$backup_file" ]]; then
+    backup_file="${file}.backup.$(date +%Y%m%d_%H%M%S)"
   fi
+  
+  log_info "Backup: $file -> $backup_file"
+  mv "$file" "$backup_file"
 }
 
-# Hàm tạo symlink an toàn
-safe_symlink() {
+# Tạo symlink an toàn với validation
+create_symlink() {
   local src="$1"
   local dest="$2"
-  local dest_dir
-  dest_dir=$(dirname "$dest")
-  if [ ! -d "$dest_dir" ]; then
-    mkdir -p "$dest_dir"
+  
+  # Kiểm tra source file có tồn tại
+  if [[ ! -e "$src" ]]; then
+    log_warn "Source không tồn tại: $src (bỏ qua)"
+    return 0
   fi
-  if [ -L "$dest" ] || [ -f "$dest" ]; then
-    rm -f "$dest"
-  fi
-  if [ -e "$src" ]; then
-    ln -s "$src" "$dest"
-    echo "Linked $src -> $dest"
-  else
-    echo "[WARN] Source $src không tồn tại, bỏ qua."
-  fi
+  
+  # Tạo thư mục đích nếu chưa có
+  ensure_directory "$(dirname "$dest")"
+  
+  # Xóa file/symlink cũ nếu có
+  [[ -e "$dest" || -L "$dest" ]] && rm -f "$dest"
+  
+  # Tạo symlink
+  ln -s "$src" "$dest"
+  log_success "Linked: $src -> $dest"
 }
 
+# ===== MAIN FUNCTIONS =====
+# Cài đặt/cập nhật dotfiles
 install_dotfiles() {
-  echo "--- Backup các file cấu hình cũ (nếu có) ---"
-  backup_file "$ZSHRC_DEST"
-  backup_file "$TMUX_DEST"
-  backup_file "$GITCONFIG_DEST"
-  backup_file "$GITIGNORE_DEST"
-  backup_file "$LVIM_DEST"
-  backup_file "$KITTY_DEST"
-
-  echo "--- Tạo symlink cho dotfiles ---"
-  safe_symlink "$ZSHRC_SRC" "$ZSHRC_DEST"
-  safe_symlink "$TMUX_SRC" "$TMUX_DEST"
-  safe_symlink "$GITCONFIG_SRC" "$GITCONFIG_DEST"
-  safe_symlink "$GITIGNORE_SRC" "$GITIGNORE_DEST"
-  safe_symlink "$LVIM_SRC" "$LVIM_DEST"
-  safe_symlink "$KITTY_SRC" "$KITTY_DEST"
-
-  echo "✅ Dotfiles đã được cài đặt thành công!"
+  log_info "=== Bắt đầu cài đặt dotfiles ==="
+  
+  # Backup và tạo symlink cho tất cả configs
+  for mapping in "${DOTFILE_MAPPINGS[@]}"; do
+    # Split string by pipe delimiter
+    local src="${mapping%|*}"
+    local dest="${mapping#*|}"
+    
+    # Backup file cũ trước
+    backup_file "$dest"
+    
+    # Tạo symlink
+    local full_src="$DOTFILES_DIR/$src"
+    create_symlink "$full_src" "$dest"
+  done
+  
+  log_success "Dotfiles đã được cài đặt thành công!"
 }
 
-# Main
-if [ ! -d "$DOTFILES_DIR" ]; then
-  echo "Installing Dotfiles for the first time..."
-  git clone --depth=1 https://github.com/al0xd/dotfiles.git "$DOTFILES_DIR"
+# Khởi tạo repository dotfiles
+setup_repository() {
+  if [[ ! -d "$DOTFILES_DIR" ]]; then
+    log_info "Clone dotfiles repository lần đầu..."
+    git clone --depth=1 "$REPO_URL" "$DOTFILES_DIR"
+    log_success "Repository đã được clone thành công!"
+  else
+    log_info "Repository đã tồn tại, cập nhật..."
+    cd "$DOTFILES_DIR"
+    
+    # Pull updates nếu có thể
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+      log_info "Cập nhật từ remote repository..."
+      git pull origin master || log_warn "Không thể pull updates"
+    fi
+  fi
+}
+
+# Validate environment và dependencies
+validate_environment() {
+  # Kiểm tra git có sẵn
+  if ! command -v git &> /dev/null; then
+    log_error "Git không được tìm thấy. Vui lòng cài đặt Git trước."
+    exit 1
+  fi
+  
+  # Kiểm tra quyền ghi vào HOME
+  if [[ ! -w "$HOME" ]]; then
+    log_error "Không có quyền ghi vào thư mục HOME: $HOME"
+    exit 1
+  fi
+}
+
+# Hiển thị help
+show_help() {
+  cat << EOF
+Dotfiles Installer - Cài đặt cấu hình dotfiles
+
+USAGE:
+  $0 [OPTIONS]
+
+OPTIONS:
+  -h, --help     Hiển thị help này
+  -d, --dir DIR  Chỉ định thư mục dotfiles (mặc định: $HOME/dotfiles)
+
+EXAMPLES:
+  $0                     # Cài đặt bình thường
+  $0 -d /path/to/custom  # Sử dụng thư mục custom
+
+EOF
+}
+
+# Parse command line arguments
+parse_arguments() {
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -h|--help)
+        show_help
+        exit 0
+        ;;
+      -d|--dir)
+        DOTFILES_DIR="$2"
+        shift 2
+        ;;
+      *)
+        log_error "Unknown option: $1"
+        show_help
+        exit 1
+        ;;
+    esac
+  done
+}
+
+# ===== MAIN EXECUTION =====
+main() {
+  parse_arguments "$@"
+  
+  log_info "🚀 Khởi động Dotfiles Installer..."
+  log_info "Dotfiles directory: $DOTFILES_DIR"
+  
+  validate_environment
+  setup_repository
+  
   cd "$DOTFILES_DIR"
-  install_dotfiles "$@"
-else
-  echo "Dotfiles đã tồn tại, tiến hành cập nhật..."
-  cd "$DOTFILES_DIR"
-  install_dotfiles "$@"
+  install_dotfiles
+  
+  log_success "🎉 Hoàn thành! Reload shell để áp dụng thay đổi."
+}
+
+# Chạy script với error handling
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+  main "$@"
 fi
 

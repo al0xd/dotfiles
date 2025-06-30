@@ -121,21 +121,8 @@ export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 alias ibrew='arch -x86_64 /usr/local/bin/brew'
 export PATH="/usr/local/opt/v8@3.15/bin:$PATH"
 
-# personal alias
-# Docker
-alias dcu='docker compose up --remove-orphans'
-alias dc='docker compose'
-alias dce='docker compose exec'
-alias dcb='docker compose build'
-alias dcd='docker compose down'
-alias dcrs='docker compose restart'
-# cloudflared
-alias clr='cloudflared tunnel --loglevel debug run'
-#Fly
-alias fssh='fly ssh console'
-alias fsshc='fly ssh console --pty -C "bin/rails console"'
-alias flog='fly logs'
-
+# Load personal aliases and functions
+[ -f ~/dotfiles/zsh/aliases.zsh ] && source ~/dotfiles/zsh/aliases.zsh
 
 # rbenv
 export RBENV_ROOT=/opt/homebrew/opt/rbenv
@@ -168,7 +155,3 @@ compinit
 
 # Added by Windsurf
 export PATH="/Users/alex/.codeium/windsurf/bin:$PATH"
-
-dceb() {
-  docker compose exec -it "$1" bash
-}

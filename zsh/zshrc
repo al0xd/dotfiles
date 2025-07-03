@@ -71,7 +71,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z zsh-autosuggestions zsh-syntax-highlighting zsh_codex)
+plugins=(git z zsh-autosuggestions zsh-syntax-highlighting zsh_codex ah)
 bindkey '^X' create_completion
 
 source $ZSH/oh-my-zsh.sh
@@ -155,4 +155,3 @@ compinit
 
 # Added by Windsurf
 export PATH="/Users/alex/.codeium/windsurf/bin:$PATH"
-source ~/dotfiles/zsh/aliases.zsh

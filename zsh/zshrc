@@ -155,3 +155,4 @@ compinit
 
 # Added by Windsurf
 export PATH="/Users/alex/.codeium/windsurf/bin:$PATH"
+source ~/dotfiles/zsh/aliases.zsh

@@ -59,44 +59,214 @@ dclog() {
   fi
 }
 
+# Run command in new docker container
+dcr() {
+  if [[ -z "$1" ]]; then
+    echo "❌ Usage: dcr <service_name> [command]"
+    echo "   Example: dcr web bash"
+    echo "   Example: dcr web rails console"
+    echo "   Example: dcr web npm install"
+    echo "   Use --rm flag to auto-remove container after run"
+    return 1
+  fi
+  
+  local service="$1"
+  shift # Remove first argument (service name)
+  
+  # Check if --rm flag should be used (default behavior)
+  local rm_flag="--rm"
+  
+  if [[ $# -eq 0 ]]; then
+    # No command specified, default to bash
+    echo "🐳 docker compose run $rm_flag $service bash"
+    docker compose run $rm_flag "$service" bash
+  else
+    # Command specified
+    echo "🐳 docker compose run $rm_flag $service $@"
+    docker compose run $rm_flag "$service" "$@"
+  fi
+}
+
+# Show all docker images
+dimages() {
+  echo "🖼️  docker images"
+  docker images
+}
+
+# Search docker images by keyword
+dsearch() {
+  if [[ -z "$1" ]]; then
+    echo "❌ Usage: dsearch <keyword>"
+    echo "   Example: dsearch nginx"
+    return 1
+  fi
+  echo "🔍 docker images | grep $1"
+  docker images | grep "$1"
+}
+
+# Remove docker images by keyword (with confirmation)
+drmi() {
+  if [[ -z "$1" ]]; then
+    echo "❌ Usage: drmi <keyword>"
+    echo "   Example: drmi nginx"
+    echo "   This will remove ALL images containing the keyword"
+    return 1
+  fi
+  
+  local images=$(docker images | grep "$1" | awk '{print $3}')
+  if [[ -z "$images" ]]; then
+    echo "ℹ️  No images found with keyword: $1"
+    return 0
+  fi
+  
+  echo "🗑️  Images to be removed:"
+  docker images | grep "$1"
+  echo ""
+  echo "⚠️  Are you sure you want to remove these images? (y/N)"
+  read confirmation
+  if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+    echo "🗑️  docker rmi $(echo $images | tr '\n' ' ')"
+    echo $images | xargs docker rmi
+  else
+    echo "❌ Operation cancelled"
+  fi
+}
+
+# Remove dangling images (no tag)
+drmino() {
+  local dangling=$(docker images -f "dangling=true" -q)
+  if [[ -z "$dangling" ]]; then
+    echo "ℹ️  No dangling images found"
+    return 0
+  fi
+  
+  echo "🗑️  Dangling images to be removed:"
+  docker images -f "dangling=true"
+  echo ""
+  echo "⚠️  Remove all dangling images? (y/N)"
+  read confirmation
+  if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+    echo "🗑️  docker image prune -f"
+    docker image prune -f
+  else
+    echo "❌ Operation cancelled"
+  fi
+}
+
+# Remove unused images
+drmiun() {
+  echo "🗑️  This will remove all unused images (not referenced by any container)"
+  echo "⚠️  Are you sure? (y/N)"
+  read confirmation
+  if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+    echo "🗑️  docker image prune -a -f"
+    docker image prune -a -f
+  else
+    echo "❌ Operation cancelled"
+  fi
+}
+
+# Show running containers
+dpsrun() {
+  echo "🏃 docker ps"
+  docker ps
+}
+
+# Remove stopped containers
+drmcon() {
+  local stopped=$(docker ps -a -q --filter "status=exited")
+  if [[ -z "$stopped" ]]; then
+    echo "ℹ️  No stopped containers found"
+    return 0
+  fi
+  
+  echo "🗑️  Stopped containers to be removed:"
+  docker ps -a --filter "status=exited"
+  echo ""
+  echo "⚠️  Remove all stopped containers? (y/N)"
+  read confirmation
+  if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+    echo "🗑️  docker container prune -f"
+    docker container prune -f
+  else
+    echo "❌ Operation cancelled"
+  fi
+}
+
+# Remove containers by keyword
+drmkey() {
+  if [[ -z "$1" ]]; then
+    echo "❌ Usage: drmkey <keyword>"
+    echo "   Example: drmkey nginx"
+    echo "   This will remove ALL containers containing the keyword"
+    return 1
+  fi
+  
+  local containers=$(docker ps -a | grep "$1" | awk '{print $1}')
+  if [[ -z "$containers" ]]; then
+    echo "ℹ️  No containers found with keyword: $1"
+    return 0
+  fi
+  
+  echo "🗑️  Containers to be removed:"
+  docker ps -a | grep "$1"
+  echo ""
+  echo "⚠️  Are you sure you want to remove these containers? (y/N)"
+  read confirmation
+  if [[ "$confirmation" =~ ^[Yy]$ ]]; then
+    echo "🗑️  docker rm -f $(echo $containers | tr '\n' ' ')"
+    echo $containers | xargs docker rm -f
+  else
+    echo "❌ Operation cancelled"
+  fi
+}
+
 # =============
 # Help Command
 # =============
 alias-help() {
   echo ""
-  echo "🚀 Personal Aliases & Functions Help"
-  echo "═══════════════════════════════════════"
+  echo "Personal Aliases & Functions Help"
+  echo "================================="
   echo ""
-  echo "📦 DOCKER ALIASES:"
-  echo "  dcu     → docker compose up --remove-orphans"
-  echo "  dc      → docker compose"
-  echo "  dce     → docker compose exec"
-  echo "  dcb     → docker compose build"
-  echo "  dcd     → docker compose down"
-  echo "  dcrs    → docker compose restart"
+  echo "DOCKER ALIASES:"
+  echo "  dcu     - docker compose up --remove-orphans"
+  echo "  dc      - docker compose"
+  echo "  dce     - docker compose exec"
+  echo "  dcb     - docker compose build"
+  echo "  dcd     - docker compose down"
+  echo "  dcrs    - docker compose restart"
+  echo "  dps     - show running containers (alias for dpsrun)"
   echo ""
-  echo "📦 DOCKER FUNCTIONS:"
-  echo "  dceb <service>              → Execute bash in container"
-  echo "  dclog <service> [-grep <pattern>] → Show container logs (with optional grep)"
+  echo "DOCKER FUNCTIONS:"
+  echo "  dceb <service>              - Execute bash in container"
+  echo "  dclog <service> [-grep <pattern>] - Show container logs"
+  echo "  dcr <service> [command]       - Run command in new container"
   echo ""
-  echo "☁️  CLOUDFLARE ALIASES:"
-  echo "  clr     → cloudflared tunnel --loglevel debug run"
+  echo "IMAGE MANAGEMENT:"
+  echo "  dimages                     - Show all docker images"
+  echo "  dsearch <keyword>           - Search images by keyword"
+  echo "  drmi <keyword>              - Remove images by keyword"
+  echo "  drmino                      - Remove dangling images"
+  echo "  drmiun                      - Remove unused images"
   echo ""
-  echo "✈️  FLY.IO ALIASES:"
-  echo "  fssh    → fly ssh console"
-  echo "  fsshc   → fly ssh console --pty -C \"bin/rails console\""
-  echo "  flog    → fly logs"
+  echo "CONTAINER MANAGEMENT:"
+  echo "  dpsrun                      - Show running containers"
+  echo "  drmcon                      - Remove stopped containers"
+  echo "  drmkey <keyword>            - Remove containers by keyword"
   echo ""
-  echo "💡 HELP:"
-  echo "  alias-help → Show this help message"
+  echo "CLOUDFLARE ALIASES:"
+  echo "  clr     - cloudflared tunnel --loglevel debug run"
   echo ""
-  echo "Usage examples:"
-  echo "  dcu                    # Start all services"
-  echo "  dceb web               # Execute bash in 'web' container"
-  echo "  dclog web -grep ERROR  # Show web logs and filter for ERROR"
-  echo "  fssh                   # SSH into fly.io app"
+  echo "FLY.IO ALIASES:"
+  echo "  fssh    - fly ssh console"
+  echo "  fsshc   - fly ssh console --pty -C 'bin/rails console'"
+  echo "  flog    - fly logs"
   echo ""
 }
 
 # Alias for help
-alias ah='alias-help' 
+alias ah='alias-help'
+
+# Additional aliases that depend on functions
+alias dps='dpsrun' 

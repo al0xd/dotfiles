@@ -304,48 +304,6 @@ lvim.plugins = {
   {
     'neoclide/coc.nvim'
   },
-  {
-  -- AI
-    "Bryley/neoai.nvim",
-    dependencies = {
-        "MunifTanjim/nui.nvim",
-    },
-    cmd = {
-        "NeoAI",
-        "NeoAIOpen",
-        "NeoAIClose",
-        "NeoAIToggle",
-        "NeoAIContext",
-        "NeoAIContextOpen",
-        "NeoAIContextClose",
-        "NeoAIInject",
-        "NeoAIInjectCode",
-        "NeoAIInjectContext",
-        "NeoAIInjectContextCode",
-    },
-    keys = {
-        { "<leader>as", desc = "summarize text" },
-        { "<leader>ag", desc = "generate git message" },
-    },
-    config = function()
-        require("neoai").setup({
-            -- Options go here
-        })
-    end
-  }
-  -- {
-  --   "ethanholz/nvim-lastplace",
-  --   event = "BufRead",
-  --   config = function()
-  --     require("nvim-lastplace").setup({
-  --       lastplace_ignore_buftype = { "quickfix", "nofile", "help" },
-  --       lastplace_ignore_filetype = {
-  --         "gitcommit", "gitrebase", "svn", "hgcommit",
-  --       },
-  --       lastplace_open_folds = true,
-  --     })
-  --   end,
-  -- },
 }
 local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {

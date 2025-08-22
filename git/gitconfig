@@ -97,14 +97,14 @@
   pretty = format:%C(blue)%ad%Creset %C(yellow)%h%C(green)%d%Creset %C(blue)%s %C(magenta) [%an]%Creset
 [mergetool]
   prompt = false
-	keepBackup = true
+	keepBackup = false
 [mergetool "mvimdiff"]
   cmd="mvim -c 'Gdiff' $MERGED"     # use fugitive.vim for 3-way merge
   keepbackup=false
 [merge]
   summary = true
   verbosity = 1
-  tool = mvimdiff
+	tool = vscode
 [apply]
   whitespace = nowarn
 [branch]
@@ -139,3 +139,5 @@
 	gpgsign = true
 [safe]
 	directory = /Users/alex/Downloads/actions-runner/_work/shopify-product-badge/shopify-product-badge
+[mergetool "vscode"]
+	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED

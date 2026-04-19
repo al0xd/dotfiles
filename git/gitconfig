@@ -1,9 +1,9 @@
 # set your user tokens as environment variables, such as ~/.secrets
 # See the README for examples.
 [user]
-	name = Alex
-	email = dinhhungvn@gmail.com
-	signingkey = /Users/alex/.ssh/id_rsa.pub
+	name = Alex Dinh
+	email = alexdinh@fordeercommerce.io
+	signingkey = 9A21B4BB98D36CBD
 [color]
   ui = true
 [color "branch"]
@@ -134,10 +134,13 @@
 [core]
 	excludesfile = /Users/alex/.gitignore
 [gpg]
-	format = ssh
+	format = openpgp
+	program = gpg
 [commit]
 	gpgsign = true
 [safe]
 	directory = /Users/alex/Downloads/actions-runner/_work/shopify-product-badge/shopify-product-badge
 [mergetool "vscode"]
 	cmd = code --wait --merge $REMOTE $LOCAL $BASE $MERGED
+[tag]
+	gpgSign = true

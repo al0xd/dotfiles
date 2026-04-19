@@ -270,3 +270,4 @@ alias ah='alias-help'
 
 # Additional aliases that depend on functions
 alias dps='dpsrun' 
+alias p='pnpm'

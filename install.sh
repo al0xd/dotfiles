@@ -142,6 +142,25 @@ validate_environment() {
   fi
 }
 
+# Tạo file .env trong dotfiles nếu chưa có
+ensure_dotfiles_env_file() {
+  local env_file="$HOME/.dotfiles/.env"
+
+  ensure_directory "$(dirname "$env_file")"
+
+  if [[ -f "$env_file" ]]; then
+    log_info "Đã tồn tại file env: $env_file"
+    return 0
+  fi
+
+  log_info "Tạo file env mặc định cho shell: $env_file"
+  cat > "$env_file" << 'EOF'
+# Dotfiles environment variables
+# Thêm các biến môi trường cá nhân của bạn vào đây.
+EOF
+  log_success "Đã tạo file env: $env_file"
+}
+
 # Hiển thị help
 show_help() {
   cat << EOF
@@ -191,6 +210,7 @@ main() {
   
   validate_environment
   setup_repository
+  ensure_dotfiles_env_file
   
   cd "$DOTFILES_DIR"
   install_dotfiles

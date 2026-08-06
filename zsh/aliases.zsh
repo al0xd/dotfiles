@@ -265,8 +265,8 @@ alias-help() {
   echo ""
 }
 
-# Alias for help
-alias ah='alias-help'
+# Personal aliases help (do NOT use `ah` — reserved by ah plugin dispatcher)
+alias pah='alias-help'
 
 # Additional aliases that depend on functions
 alias dps='dpsrun' 

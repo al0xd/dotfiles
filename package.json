@@ -232,6 +232,7 @@
     "yoctocolors": "^2.1.1"
   },
   "scripts": {
+    "fordeer": "node /Users/alex/Apps/Fordeer/fordeer-project-intelligence/apps/cli/dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

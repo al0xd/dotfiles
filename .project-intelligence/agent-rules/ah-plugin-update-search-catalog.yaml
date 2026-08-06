@@ -1,0 +1,18 @@
+id: ah-plugin-update-search-catalog
+rule: >-
+  Khi thêm / đổi / xóa alias, function hoặc command trong zsh-plugin-ah
+  (ah.plugin.zsh): BẮT BUỘC cập nhật `_AH_CMD_CATALOG` để `ah search` tìm được
+  lệnh mới; cập nhật `_AH_SYNONYMS` nếu có khái niệm mới; đồng bộ ah-help,
+  README.md, test.sh. Format catalog: name|usage|maps_to|description|keywords.
+  Không ship command mới mà ah search không tìm thấy.
+created_at: 2026-08-06T02:10:51.429Z
+updated_at: 2026-08-06T02:10:51.429Z
+source_prompt: >-
+  ghi nhớ rằng khi nào có thêm command mới thì phải cập nhật vào hàm search này
+  (ah search / _AH_CMD_CATALOG)
+active: true
+tags:
+  - user-requested
+  - ah-plugin
+  - mandatory
+  - convention

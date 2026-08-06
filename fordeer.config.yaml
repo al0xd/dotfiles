@@ -1,0 +1,269 @@
+# =============================================================================
+# Fordeer Project Intelligence — fordeer.config.yaml
+# =============================================================================
+# File cấu hình cho CLI `fordeer` và MCP server.
+#
+# Cách dùng:
+#   - Dòng bắt đầu bằng `#` là ghi chú, không có hiệu lực.
+#   - Bỏ dấu `#` ở đầu dòng (và chỉnh giá trị) để bật tuỳ chọn.
+#   - CLI/MCP bản build (dist) đọc YAML được — không cần TypeScript loader.
+#
+# Thứ tự ưu tiên khi có nhiều file config:
+#   fordeer.config.yaml → .yml → .json → .mjs → .js → .ts
+# =============================================================================
+
+# -----------------------------------------------------------------------------
+# Lưu trữ vector (embeddings)
+# -----------------------------------------------------------------------------
+# Backend lưu vector semantic search.
+# Giá trị: sqlite-vector | lancedb | chroma
+# Hiện production chỉ hỗ trợ sqlite-vector (lancedb/chroma dành sẵn, chưa dùng).
+embeddings: sqlite-vector
+
+# Tự học / cập nhật tri thức sau analyze (feature memory, skills, …)
+autoLearn: true
+# Tự cập nhật kho .project-intelligence khi analyze/sync
+autoUpdateKnowledge: true
+# Tự sinh/cập nhật agent skills từ bundle
+autoGenerateSkills: true
+
+# ĐÃ LỖI THỜI (không còn tự chạy trong analyze).
+# Muốn viz: dùng lệnh `fordeer viz` hoặc MCP `generate_project_viz`.
+autoGenerateViz: false
+
+# ĐÃ LỖI THỜI (không còn tự chạy trong analyze).
+# Muốn README/docs: `fordeer readme` hoặc MCP `generate_project_documentation`.
+# autoGenerateReadme: false
+
+# -----------------------------------------------------------------------------
+# semantic — Embedding / tìm kiếm ngữ nghĩa
+# -----------------------------------------------------------------------------
+semantic:
+  # Nhà cung cấp embedding:
+  #   auto   — có OPENAI_API_KEY thì dùng OpenAI, không thì hash local
+  #   hash   — vector giả lập deterministic (dev/test, chất lượng thấp)
+  #   openai — bắt buộc API key (OpenAI hoặc tương thích)
+  #   ollama — model local miễn phí qua Ollama (không cần key thật)
+  provider: auto
+
+  # Preset model Ollama miễn phí (khi provider = ollama hoặc auto + Ollama).
+  # Tự điền embeddingModel + dimensions (và apiBaseUrl Ollama nếu phù hợp).
+  # Gợi ý:
+  #   nomic-embed-text     — khuyến nghị analyze/search (768 dims)
+  #   all-minilm           — nhẹ, nhanh
+  #   mxbai-embed-large    — chất lượng cao hơn, tốn RAM
+  #   bge-m3               — đa ngữ (gồm tiếng Việt) khá tốt
+  #   qwen3-embedding-0.6b | qwen3-embedding-4b | qwen3-embedding-8b
+  # modelPreset: nomic-embed-text
+
+  # Preset RIÊNG cho MCP `save_feature_memory` (sidecar), không ảnh hưởng analyze.
+  # Mặc định: all-minilm (nhanh).
+  # featureMemoryModelPreset: all-minilm
+
+  # Tên model embedding khi không dùng modelPreset (thường dùng với OpenAI)
+  embeddingModel: all-minilm 
+  # Số chiều vector (phải khớp model)
+  # dimensions: 1536
+
+  # Thư mục lưu index vector (tương đối project root)
+  # vectorStorePath: .fordeer/vectors
+
+  # Base URL API tương thích OpenAI `/embeddings`
+  # apiBaseUrl: https://api.openai.com/v1
+  # apiBaseUrl: http://127.0.0.1:11434/v1   # Ollama local
+
+  # Tên biến môi trường chứa API key
+  # apiKeyEnv: OPENAI_API_KEY
+
+  # Số text mỗi lần gọi /embeddings. 0 = mặc định provider (Ollama 16, OpenAI 64)
+  # embedBatchSize: 0
+  # Số batch HTTP chạy song song. 0 = mặc định (Ollama 2, OpenAI 4)
+  # embedMaxConcurrency: 0
+  # Cắt mỗi text còn tối đa N ký tự trước khi embed. 0 = mặc định provider
+  # embedMaxCharsPerText: 0
+  # Timeout mỗi batch (ms). 0 = mặc định provider
+  # embedTimeoutMs: 0
+
+# -----------------------------------------------------------------------------
+# llm — Chat LLM làm giàu tri thức khi `fordeer analyze`
+# -----------------------------------------------------------------------------
+# Dùng sau bước discovery heuristic để viết lại mô tả tech-specs / routes / features.
+# Không dùng embedding model cho chat.
+llm:
+  # off      — tắt LLM (mặc định, an toàn offline)
+  # auto     — bật khi có API key trong env
+  # openai | ollama | deepseek | kimi — ép provider
+  provider: ollama
+
+  # ID model chat (vd. llama3.2, qwen2.5). Bắt buộc là chat model, không phải embed.
+  model: qwen2.5:3b
+
+  # Base URL OpenAI-compatible `/chat/completions`
+  # apiBaseUrl: http://127.0.0.1:11434/v1
+
+  # Env chứa API key (mỗi provider có default riêng nếu bỏ trống)
+  # apiKeyEnv: FORDEER_LLM_API_KEY
+
+  # Viết lại tech-specs/project-tech-spec.yaml từ stack đã phát hiện
+  # enrichTechSpecs: true
+  # Điền Purpose/Response còn trống trong routes/*.md từ snippet source
+  # enrichRouteSpecs: true
+  # Làm giàu mô tả features
+  # enrichFeatures: true
+  # Làm giàu business rules
+  # enrichBusinessRules: true
+  # Khi bật chat LLM: `fordeer viz` sinh khái quát TỪ BỘ NHỚ (kiến thức đang có, tên/tính năng/basics)
+  # enrichVizOverview: true
+  # Đọc snippet entry_points khi enrich feature
+  # readCodeSnippets: true
+  # Giới hạn số lần gọi LLM cho features / routes mỗi lần analyze
+  # maxFeatures: 15
+  # maxRoutes: 20
+  # Độ “sáng tạo” của chat (0–2)
+  # temperature: 0.3
+  # Timeout mỗi lần /chat/completions (ms). 0 = không timeout. Mặc định 120000.
+  # chatTimeoutMs: 120000
+  # Giới hạn token sinh ra. 0 = không giới hạn. Mặc định 768.
+  # maxTokens: 768
+
+# -----------------------------------------------------------------------------
+# context — Cổng kiểm soát agent (load_project_context / pre_task_analysis)
+# -----------------------------------------------------------------------------
+# Các cờ dưới đây điều khiển “hard/soft gate” khi agent làm việc qua MCP.
+# context:
+#   # Catalog STALE → contextReady=false, chặn readyToCode đến khi analyze
+#   hardGateOnStale: true
+#
+#   # Task lớn/rủi ro cao cần user xác nhận trước khi readyToCode
+#   requireUserConfirmationOnLargeTasks: true
+#
+#   # Chỉ `confirm_task_scope` mới tính là đã confirm (bỏ qua user_confirmed tự set)
+#   requireConfirmTaskScopeTool: true
+#
+#   # Một số tool ghi/gate báo lỗi cứng nếu chưa gọi load_project_context trong session
+#   hardBlockToolsUntilLoadContext: true
+#
+#   # TTL (giờ) lưu xác nhận phạm vi trên đĩa. 0 = chỉ trong session
+#   scopeConfirmationTtlHours: 24
+#
+#   # Ngân sách ms cho semantic enrichment trong load (chạy song song, không chặn catalog).
+#   # 0 = chờ vô hạn (không khuyến nghị)
+#   loadSemanticTimeoutMs: 800
+#
+#   # TTL cache freshness trong process (ms). 0 = luôn quét lại cây file
+#   loadFreshnessCacheTtlMs: 30000
+#
+#   # false = tắt hẳn Ollama/vector trên load; vẫn có mustRead từ catalog
+#   loadSemanticEnrichment: true
+#
+#   # Đưa top-k agent-memory/pitfall vào mustReadBeforeCoding
+#   loadAgentMemoryInBriefing: true
+#   # Số mục agent-memory tối đa inject vào mustRead
+#   loadAgentMemoryTopK: 5
+#
+#   # Trong cùng session MCP: bỏ qua analyze lặp → chuyển sang search_task_knowledge
+#   # (trừ khi stale hoặc force: true)
+#   analyzeOncePerSession: true
+#
+#   # Cấm analyze_project giữa task khi catalog đã sẵn và chưa stale
+#   blockAnalyzeWhenCatalogReady: true
+#
+#   # true = catalog cũ cũng có thể kích hoạt confirm scope (thường để false;
+#   # stale dùng hardGateOnStale + analyze, không hỏi user “ok”)
+#   staleTriggersScopeConfirmation: false
+#
+#   # Chờ phản hồi user tối đa (ms) khi agent hỏi confirm — mặc định 120000 (2 phút).
+#   # Hết giờ / không trả lời → theo userConfirmNoReplyPolicy (safer), không tự confirm_*.
+#   userConfirmNoReplyTimeoutMs: 120000
+#   userConfirmNoReplyPolicy: safer
+#
+#   # detect_changes đính kèm gợi ý ownership từ git log/blame khi risk ≥ medium
+#   # (chỉ advisory — không ảnh hưởng readyToCode / confirm)
+#   attachGitHistoryHintsOnDetectChanges: true
+
+# -----------------------------------------------------------------------------
+# codeGraph — Đồ thị gọi hàm / blast radius (Fordeer + GitNexus/CGC tuỳ chọn)
+# -----------------------------------------------------------------------------
+# Lớp bằng chứng cho impact — KHÔNG tự set readyToCode.
+codeGraph:
+  # Nguồn ưu tiên:
+  #   auto     — GitNexus → CGC (nếu có tín hiệu đĩa) → Fordeer catalog
+  #   fordeer  — luôn dùng xấp xỉ 3-tier / callEdges của Fordeer
+  #   gitnexus — ưu tiên MCP GitNexus khi có thư mục .gitnexus/
+  #   cgc      — ưu tiên CodeGraphContext khi có .cgcignore / *.cgc
+  #   off      — tắt gợi ý graph / chỉ availability
+  provider: auto
+
+  # HYBRID: có provider ngoài → agent gọi MCP đó (call-graph nặng);
+  # Fordeer impact_analysis = fallback 3-tier. Truyền external_impact_risk
+  # vào pre_task_analysis để soft-balance (LOW downgrade / HIGH escalate).
+  # preferExternalForImpact: true
+
+  # External HIGH/CRITICAL soft-escalate requiresUserConfirmation
+  # softEscalateOnExternalHigh: true
+
+  # Gắn codeGraphAvailability + mustRead hybrid vào load_project_context
+  # hintOnLoadContext: true
+
+  # Đường dẫn tương đối bổ sung đánh dấu repo đang dùng CGC
+  # cgcSignals: []
+
+  # Master switch: trích call/new/jsx edges bằng Tree-sitter (TS/JS) → callEdges.
+  # WASM lỗi → soft-fail, vẫn dùng deps AST. mode=full luôn chạy khi bật.
+  treeSitterCallEdges: true
+  # mode=fast bỏ qua call edges (parse lần 2 rất chậm). Bật nếu cần ngay:
+  # treeSitterOnFastAnalyze: true
+
+  # Số call edge tối đa giữ lại mỗi file
+  # treeSitterMaxEdgesPerFile: 200
+
+# -----------------------------------------------------------------------------
+# memory — Agent memory + chiếu đồ thị Neo4j (tuỳ chọn)
+# -----------------------------------------------------------------------------
+# Nguồn sự thật vẫn là YAML dưới .project-intelligence/agent-memory/.
+# Neo4j chỉ là chiếu phụ, có thể xoá/build lại.
+memory:
+#   # off = chỉ file + vector; neo4j = chiếu lên Neo4j khi URI reachable
+  graphProvider: neo4j
+#
+#   # Lỗi Neo4j chỉ log, không làm fail MCP write
+#   softFailGraph: true
+#
+#   # Sau save_feature_memory: tự archive episode cũ khi vượt ngưỡng
+#   autoConsolidateEpisodes: true
+#
+#   # Giữ N episode YAML mới nhất trong memory-episodes/ (cũ → archive/)
+#   episodeKeepRecent: 8
+#
+  neo4j:
+    uri: bolt://localhost:7687
+    username: neo4j
+    password: fordeer-neo4j
+    # database: neo4j
+    # Env chứa password (ưu tiên hơn password ở trên khi được set)
+    # passwordEnv: NEO4J_PASSWORD
+
+# -----------------------------------------------------------------------------
+# mcp — Cấu hình MCP server Fordeer
+# -----------------------------------------------------------------------------
+# Có thể override runtime bằng env:
+#   FORDEER_MCP_TRANSPORT, FORDEER_MCP_PORT, FORDEER_MCP_HOST,
+#   FORDEER_MCP_PATH, FORDEER_MCP_AUTH_TOKEN
+# mcp:
+#   name: fordeer
+#   version: 0.2.8
+#
+#   # stdio — IDE spawn local (mặc định, tương thích cũ)
+#   # http  — Streamable HTTP cổng cố định (tunnel/proxy ra ngoài)
+#   transport: stdio
+#
+#   http:
+#     # Cổng bind local (env: FORDEER_MCP_PORT)
+#     port: 8787
+#     # 127.0.0.1 = chỉ máy local/tunnel; 0.0.0.0 = LAN (cẩn thận bảo mật)
+#     host: 127.0.0.1
+#     # Đường dẫn endpoint MCP
+#     path: /mcp
+#     # Bearer token bắt buộc mỗi request khi set (env: FORDEER_MCP_AUTH_TOKEN).
+#     # Client gửi Authorization: Bearer <token>. /health vẫn mở.
+#     # authToken: change-me

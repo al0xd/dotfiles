@@ -1,0 +1,17 @@
+---
+description: Khi thêm command mới vào zsh-plugin-ah phải cập nhật ah search catalog
+globs: zsh-plugin-ah/**
+alwaysApply: false
+---
+
+# AH Plugin — Search Catalog Sync
+
+Khi thêm / đổi / xóa **alias, function, hoặc command** trong `zsh-plugin-ah`:
+
+1. **BẮT BUỘC** cập nhật `_AH_CMD_CATALOG` trong `ah.plugin.zsh` (dùng bởi `ah search`).
+2. Cập nhật `_AH_SYNONYMS` nếu lệnh thuộc khái niệm mới (stop, remove, logs, …).
+3. Cập nhật `ah-help`, `README.md`, `test.sh` cho đồng bộ.
+
+Format catalog: `name|usage|maps_to|description|keywords`
+
+Không được ship command mới mà `ah search <keyword>` không tìm thấy.

@@ -160,3 +160,14 @@ export PATH="/opt/homebrew/bin:$PATH"
 export HOMEBREW_NO_AUTO_UPDATE=1
 
 
+# Local secrets (API keys, etc.) — file is gitignored
+[[ -f "$HOME/dotfiles/zsh/secrets.local.zsh" ]] && source "$HOME/dotfiles/zsh/secrets.local.zsh"
+[[ -f "${0:A:h}/secrets.local.zsh" ]] && source "${0:A:h}/secrets.local.zsh"
+
+# pnpm
+export PNPM_HOME="/Users/alex/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

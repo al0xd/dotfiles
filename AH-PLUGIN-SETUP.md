@@ -114,7 +114,9 @@ zsh-plugin-ah/
 ### Container Management
 - `dps` - Show running containers
 - `drmcon` - Remove stopped containers
-- `drmkey <keyword>` - Remove containers by keyword
+- `dstopkey <keyword>` - Stop containers by keyword (lists names first)
+- `drmkey <keyword>` - Remove containers by keyword (lists names first)
+- `ah search <keyword>` - Semantic search AH commands (e.g. `ah search stop`)
 
 ### Cloud Platforms
 - `clr` - Cloudflare tunnel run

@@ -1,0 +1,14 @@
+---
+description: Community-published AH plugin — never leak tokens/secrets
+globs: zsh-plugin-ah/**
+alwaysApply: false
+---
+
+# AH Plugin — Community Publish Security
+
+Đây là dự án **publish cộng đồng** (`al0xd/ah`). Luôn tuân thủ bảo mật:
+
+- Không commit/push/log/ghi vào README: token, secret key, password, API key, private key, `.env`, credentials
+- Không hardcode secret trong code, demo, test, CI
+- Review diff trước mọi commit/PR; redact dữ liệu nhạy cảm
+- Nghi lộ secret → **không push**, cảnh báo user ngay

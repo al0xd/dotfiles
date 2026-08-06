@@ -10,3 +10,7 @@ node_modules/
 .fordeer/
 zsh/secrets.local.zsh
 **/secrets.local.zsh
+.fordeer
+.claude
+.cursor
+.project-intelligence
